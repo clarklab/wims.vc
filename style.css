@@ -3,3 +3,7 @@ body{
 font-weight: 200;
 font-style: normal;
 }
+
+.post-body p, .post-body ul, .post-body ol, .post-body img, .post-body h1, .post-body h2, .post-body h3, .post-body h4, .post-body h5, .post-body h6{
+    margin-bottom:2rem
+}

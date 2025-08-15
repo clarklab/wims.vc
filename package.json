@@ -1,0 +1,16 @@
+{
+  "name": "wims-blog-generator",
+  "version": "1.0.0",
+  "description": "Simple static blog generator for wims.vc",
+  "scripts": {
+    "build": "node build.js",
+    "watch": "node build.js --watch",
+    "dev": "npm run watch"
+  },
+  "dependencies": {
+    "marked": "^12.0.0",
+    "chokidar": "^3.6.0"
+  },
+  "devDependencies": {},
+  "type": "module"
+}
