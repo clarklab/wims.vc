@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://use.typekit.net/tia6kbg.css">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="icon" href="https://wims.vc/favicon.png">
+    <meta name="description" content="wims.vc is a venture capital firm that invests in early-stage AI startups.">
+    <meta property="og:title" content="wims.vc">
+    <meta property="og:description" content="wims.vc is a venture capital firm that invests in early-stage AI startups.">
+    <meta property="og:image" content="https://wims.vc/unfurl.png">
+    <meta property="og:url" content="https://wims.vc">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="wims.vc">
+    <meta property="og:locale" content="en_US">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body class="bg-orange-50/60 max-w-4xl mx-auto text-2xl flex flex-col gap-8 md:gap-12 items-center p-8 pt-24 md:p-24 pb-24 md:pb-48 text-orange-950">
+    <a href="/"><img src="/w.svg" alt="wims.vc" class="w-24 inline-block"></a>
+    <h1 class="title text-5xl">Contact wims.vc</h1>
+    
+    <form name="Contact" class="w-full flex flex-col gap-6" netlify>
+      <div class="relative">
+        <input type="text" id="name" name="name" placeholder=" " class="px-4 pt-7 pb-3 rounded-lg bg-white border border-orange-200 focus:outline-none focus:ring-2 focus:ring-orange-500 w-full peer">
+        <label for="name" class="absolute text-base font-medium text-orange-950/60 left-4 top-6.5 transition-all peer-focus:-translate-y-4 peer-focus:text-sm peer-focus:text-orange-500 peer-[:not(:placeholder-shown)]:-translate-y-3 peer-[:not(:placeholder-shown)]:text-sm">Name</label>
+      </div>
+
+      <div class="relative">
+        <input type="email" id="email" name="email" placeholder=" " class="px-4 pt-6 pb-3 rounded-lg bg-white border border-orange-200 focus:outline-none focus:ring-2 focus:ring-orange-500 w-full peer">
+        <label for="email" class="absolute text-base font-medium text-orange-950/60 left-4 top-6.5 transition-all peer-focus:-translate-y-4 peer-focus:text-sm peer-focus:text-orange-500 peer-[:not(:placeholder-shown)]:-translate-y-3 peer-[:not(:placeholder-shown)]:text-sm">Email</label>
+      </div>
+
+      <div class="relative">
+        <input type="url" id="link" name="link" placeholder=" " class="px-4 pt-6 pb-3 rounded-lg bg-white border border-orange-200 focus:outline-none focus:ring-2 focus:ring-orange-500 w-full peer">
+        <label for="link" class="absolute text-base font-medium text-orange-950/60 left-4 top-6.5 transition-all peer-focus:-translate-y-4 peer-focus:text-sm peer-focus:text-orange-500 peer-[:not(:placeholder-shown)]:-translate-y-3 peer-[:not(:placeholder-shown)]:text-sm">Link (Optional)</label>
+      </div>
+
+      <div class="relative">
+        <textarea id="message" name="message" rows="4" placeholder=" " class="px-4 pt-6 pb-3 rounded-lg bg-white border border-orange-200 focus:outline-none focus:ring-2 focus:ring-orange-500 w-full peer"></textarea>
+        <label for="message" class="absolute text-base font-medium text-orange-950/60 left-4 top-6.5 transition-all peer-focus:-translate-y-4 peer-focus:text-sm peer-focus:text-orange-500 peer-[:not(:placeholder-shown)]:-translate-y-3 peer-[:not(:placeholder-shown)]:text-sm">Message</label>
+      </div>
+
+      <p class="hidden">
+        <label>
+          Don’t fill this out if you’re human: <input name="bot-field" type="text" />
+        </label>
+      </p>
+
+      <button type="submit" class="bg-orange-500 text-white px-8 py-6 rounded-lg hover:bg-orange-600 transition-colors text-2xl font-medium">
+        Send Message
+      </button>
+    </form>
+
+    <div class="footer w-full flex flex-col gap-2">
+        <h1 class="font-bold w-full">wims.vc</h1>
+    </div>
+
+    <div class="footer w-full flex flex-col md:flex-row gap-2 font-sans text-sm">
+      <a href="/contact">Contact</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Service</a>
+  </div>
+  </body>
+</html>
