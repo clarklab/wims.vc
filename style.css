@@ -7,3 +7,13 @@ font-style: normal;
 .post-body p, .post-body ul, .post-body ol, .post-body img, .post-body h1, .post-body h2, .post-body h3, .post-body h4, .post-body h5, .post-body h6{
     margin-bottom:2rem
 }
+.post-body h1, .post-body h2, .post-body h3, .post-body h4, .post-body h5, .post-body h6{
+    font-weight:400;
+}
+.post-body a{
+    font-weight:400;
+    text-decoration: underline;
+    text-decoration-color: #FF7F50;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 2px;
+}
