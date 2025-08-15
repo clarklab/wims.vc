@@ -14,4 +14,4 @@ Each **Challenge** will feature a real-world task, with a bit of guidance and lo
 
 We've seen too many brilliant ideas die in stealth mode, never seeing the light of day because the founders were afraid to ship something imperfect. It's time to ship early, ship often, and ship in public!
 
-We'll have more details soon. In the meantime, if you would like the sponsor an upcoming challenge, you can message [@wimbet](https://x.com/wimbet).
+We'll have more details soon. In the meantime, if you would like the sponsor an upcoming challenge, you can message [@wimbet](https://x.com/wimbet) or hit the [Contact Page](/contact).
