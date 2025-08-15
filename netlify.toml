@@ -1,0 +1,16 @@
+[build]
+  # Build command to run
+  command = "npm run build"
+  
+  # Directory to publish (the root directory since your index.htm and blog/ are in root)
+  publish = "."
+  
+  # Node.js version to use
+  [build.environment]
+    NODE_VERSION = "18"
+
+# Optional: Configure redirects if needed
+# [[redirects]]
+#   from = "/blog-posts/*"
+#   to = "/blog/:splat"
+#   status = 301
