@@ -6,11 +6,19 @@ import chokidar from 'chokidar';
 const BLOG_POSTS_DIR = './blog-posts';
 const BLOG_OUTPUT_DIR = './blog';
 const TEMPLATE_FILE = './blog-template.htm';
+const COMPANY_DATA_DIR = './company-data';
+const COMPANY_OUTPUT_DIR = './company';
+const COMPANY_TEMPLATE_FILE = './company-template.htm';
 const INDEX_FILE = './index.htm';
 
 // Ensure blog directory exists
 if (!fs.existsSync(BLOG_OUTPUT_DIR)) {
   fs.mkdirSync(BLOG_OUTPUT_DIR, { recursive: true });
+}
+
+// Ensure company directory exists
+if (!fs.existsSync(COMPANY_OUTPUT_DIR)) {
+  fs.mkdirSync(COMPANY_OUTPUT_DIR, { recursive: true });
 }
 
 // Function to parse markdown front matter and content
@@ -123,6 +131,225 @@ function updateIndex() {
   }
 }
 
+// Function to get all companies with metadata
+function getAllCompanies() {
+  if (!fs.existsSync(COMPANY_DATA_DIR)) {
+    return [];
+  }
+
+  const mdFiles = fs.readdirSync(COMPANY_DATA_DIR)
+    .filter(file => file.endsWith('.md'));
+
+  const companies = mdFiles.map(mdFile => {
+    try {
+      const mdPath = path.join(COMPANY_DATA_DIR, mdFile);
+      const mdContent = fs.readFileSync(mdPath, 'utf8');
+      const { metadata, content } = parseMarkdown(mdContent);
+
+      return {
+        filename: mdFile,
+        slug: mdFile.replace('.md', ''),
+        htmlFile: mdFile.replace('.md', '.html'),
+        name: metadata.name || 'Untitled Company',
+        url: metadata.url || '',
+        thumbnail: metadata.thumbnail || '',
+        status: metadata.status || 'Idea',
+        payments: metadata.payments || 'Not Set Up',
+        backend: metadata.backend || 'None',
+        frontend: metadata.frontend || 'None',
+        businessModel: metadata['business model'] || metadata.businessmodel || 'TBD',
+        description: metadata.description || '',
+        content: content,
+        metadata
+      };
+    } catch (error) {
+      console.error(`Error reading ${mdFile}:`, error.message);
+      return null;
+    }
+  }).filter(company => company !== null);
+
+  return companies;
+}
+
+// Function to build a single company page
+function buildCompany(mdFile) {
+  const mdPath = path.join(COMPANY_DATA_DIR, mdFile);
+  const htmlFile = mdFile.replace('.md', '.html');
+  const htmlPath = path.join(COMPANY_OUTPUT_DIR, htmlFile);
+  const slug = mdFile.replace('.md', '');
+
+  try {
+    console.log(`Building company: ${mdFile}...`);
+
+    // Read markdown file
+    const mdContent = fs.readFileSync(mdPath, 'utf8');
+    const { metadata, content } = parseMarkdown(mdContent);
+
+    // Convert markdown to HTML
+    let htmlContent = marked(content);
+
+    // Add Material Icons to h2 elements
+    const iconMap = {
+      'the opportunity': 'lightbulb',
+      'opportunity': 'lightbulb',
+      'the vision': 'visibility',
+      'vision': 'visibility',
+      'what\'s built': 'construction',
+      'whats built': 'construction',
+      'what you get': 'inventory',
+      'business model': 'payments',
+      'revenue': 'attach_money',
+      'market opportunity': 'trending_up',
+      'market': 'trending_up',
+      'path to profitability': 'show_chart',
+      'profitability': 'show_chart',
+      'go-to-market': 'rocket_launch',
+      'expansion': 'expand',
+      'current revenue': 'account_balance'
+    };
+
+    htmlContent = htmlContent.replace(/<h2>(.*?)<\/h2>/g, (match, heading) => {
+      // Decode HTML entities for matching
+      const headingLower = heading.toLowerCase().replace(/&#39;/g, "'").replace(/&apos;/g, "'");
+      let icon = 'circle'; // default icon
+
+      // Find matching icon
+      for (const [key, value] of Object.entries(iconMap)) {
+        if (headingLower.includes(key)) {
+          icon = value;
+          break;
+        }
+      }
+
+      return `<h2 data-icon="${icon}">${heading}</h2>`;
+    });
+
+    // Read template
+    const template = fs.readFileSync(COMPANY_TEMPLATE_FILE, 'utf8');
+
+    // Replace placeholders in template
+    let finalHtml = template;
+
+    // Extract metadata with defaults
+    const name = metadata.name || 'Untitled Company';
+    const url = metadata.url || '#';
+    const thumbnail = metadata.thumbnail || '/companies/placeholder.png';
+    const status = metadata.status || 'Idea';
+    const payments = metadata.payments || 'Not Set Up';
+    const backend = metadata.backend || 'None';
+    const frontend = metadata.frontend || 'None';
+    const businessModel = metadata['business model'] || metadata.businessmodel || 'TBD';
+    const description = metadata.description || name;
+
+    // Replace all instances of Company Name
+    finalHtml = finalHtml.replace(/Company Name/g, name);
+
+    // Replace Company Slug
+    finalHtml = finalHtml.replace(/Company Slug/g, slug);
+
+    // Replace Company Description
+    finalHtml = finalHtml.replace(/Company Description/g, description);
+
+    // Replace Company Thumbnail
+    finalHtml = finalHtml.replace(/Company Thumbnail/g, thumbnail);
+
+    // Replace Company URL
+    finalHtml = finalHtml.replace(/Company URL/g, url);
+
+    // Replace Company Status
+    finalHtml = finalHtml.replace(/Company Status/g, status);
+
+    // Replace Company Payments
+    finalHtml = finalHtml.replace(/Company Payments/g, payments);
+
+    // Replace Company Backend
+    finalHtml = finalHtml.replace(/Company Backend/g, backend);
+
+    // Replace Company Frontend
+    finalHtml = finalHtml.replace(/Company Frontend/g, frontend);
+
+    // Replace Company Business Model
+    finalHtml = finalHtml.replace(/Company Business Model/g, businessModel);
+
+    // Replace Company Content
+    finalHtml = finalHtml.replace(/Company Content/g, htmlContent);
+
+    // Replace slug in URL and contact subjects
+    finalHtml = finalHtml.replace(/company\/company-slug/g, `company/${slug}`);
+    finalHtml = finalHtml.replace(/subject=Buy%20Company%20Slug/g, `subject=Buy%20${encodeURIComponent(name)}`);
+    finalHtml = finalHtml.replace(/subject=CMO%20Company%20Slug/g, `subject=CMO%20${encodeURIComponent(name)}`);
+
+    // Write HTML file
+    fs.writeFileSync(htmlPath, finalHtml);
+    console.log(`✅ Built company page: ${htmlFile}`);
+
+  } catch (error) {
+    console.error(`❌ Error building company ${mdFile}:`, error.message);
+  }
+}
+
+// Function to build all companies
+function buildAllCompanies() {
+  console.log('🏢 Building all company pages...');
+
+  if (!fs.existsSync(COMPANY_DATA_DIR)) {
+    console.log('📁 No company-data directory found');
+    return;
+  }
+
+  const mdFiles = fs.readdirSync(COMPANY_DATA_DIR)
+    .filter(file => file.endsWith('.md'));
+
+  if (mdFiles.length === 0) {
+    console.log('📝 No company markdown files found');
+    return;
+  }
+
+  mdFiles.forEach(buildCompany);
+  console.log(`✨ Built ${mdFiles.length} company page(s)`);
+
+  // Update index.htm with the company list
+  updateIndexWithCompanies();
+}
+
+// Function to update index.htm with company list
+function updateIndexWithCompanies() {
+  try {
+    console.log('🔄 Updating index.htm with company list...');
+
+    const companies = getAllCompanies();
+    if (companies.length === 0) {
+      console.log('📝 No companies found, skipping company update');
+      return;
+    }
+
+    // Read current index.htm
+    const indexContent = fs.readFileSync(INDEX_FILE, 'utf8');
+
+    // Generate company grid HTML
+    const companyGridHTML = companies.map(company => {
+      return `            <div class="company">
+                <a href="/company/${company.slug}">
+                    <img class="aspect-video object-cover rounded-lg" src="${company.thumbnail}" alt="${company.name}">
+                </a>
+            </div>`;
+    }).join('\n');
+
+    // Replace the companies section
+    const updatedContent = indexContent.replace(
+      /(<div class="companies grid grid-cols-2 md:grid-cols-3 gap-8">)[\s\S]*?(<\/div>\s*<\/div>)/,
+      `$1\n${companyGridHTML}\n        $2`
+    );
+
+    // Write updated index.htm
+    fs.writeFileSync(INDEX_FILE, updatedContent);
+    console.log(`✅ Updated index.htm with ${companies.length} companie(s)`);
+
+  } catch (error) {
+    console.error('❌ Error updating index.htm with companies:', error.message);
+  }
+}
+
 // Function to build a single blog post
 function buildPost(mdFile) {
   const mdPath = path.join(BLOG_POSTS_DIR, mdFile);
@@ -199,25 +426,31 @@ ${blogListHTML}
 // Function to build all posts
 function buildAllPosts() {
   console.log('🔨 Building all blog posts...');
-  
+
   if (!fs.existsSync(BLOG_POSTS_DIR)) {
     console.log('📁 No blog-posts directory found');
     return;
   }
-  
+
   const mdFiles = fs.readdirSync(BLOG_POSTS_DIR)
     .filter(file => file.endsWith('.md'));
-  
+
   if (mdFiles.length === 0) {
     console.log('📝 No markdown files found in blog-posts directory');
     return;
   }
-  
+
   mdFiles.forEach(buildPost);
   console.log(`✨ Built ${mdFiles.length} blog post(s)`);
-  
+
   // Update index.htm with the blog post list
   updateIndex();
+}
+
+// Function to build everything
+function buildAll() {
+  buildAllPosts();
+  buildAllCompanies();
 }
 
 // Main execution
@@ -225,43 +458,54 @@ const isWatchMode = process.argv.includes('--watch');
 
 if (isWatchMode) {
   console.log('👀 Watching for changes...');
-  
+
   // Initial build
-  buildAllPosts();
-  
+  buildAll();
+
   // Watch for changes
-  const watcher = chokidar.watch([BLOG_POSTS_DIR, TEMPLATE_FILE], {
-    ignored: /^\./, 
+  const watcher = chokidar.watch([BLOG_POSTS_DIR, TEMPLATE_FILE, COMPANY_DATA_DIR, COMPANY_TEMPLATE_FILE], {
+    ignored: /^\./,
     persistent: true
   });
-  
+
   watcher.on('change', (filePath) => {
     console.log(`📝 File changed: ${filePath}`);
-    
+
     if (filePath === TEMPLATE_FILE) {
-      console.log('🔄 Template changed, rebuilding all posts...');
+      console.log('🔄 Blog template changed, rebuilding all posts...');
       buildAllPosts();
+    } else if (filePath === COMPANY_TEMPLATE_FILE) {
+      console.log('🔄 Company template changed, rebuilding all companies...');
+      buildAllCompanies();
     } else if (filePath.endsWith('.md')) {
       const mdFile = path.basename(filePath);
-      buildPost(mdFile);
-      // Update index since a post changed (could affect title, date, etc.)
-      updateIndex();
+      if (filePath.includes(BLOG_POSTS_DIR)) {
+        buildPost(mdFile);
+        updateIndex();
+      } else if (filePath.includes(COMPANY_DATA_DIR)) {
+        buildCompany(mdFile);
+        updateIndexWithCompanies();
+      }
     }
   });
-  
+
   watcher.on('add', (filePath) => {
     if (filePath.endsWith('.md')) {
       console.log(`➕ New markdown file: ${filePath}`);
       const mdFile = path.basename(filePath);
-      buildPost(mdFile);
-      // Update index since we added a new post
-      updateIndex();
+      if (filePath.includes(BLOG_POSTS_DIR)) {
+        buildPost(mdFile);
+        updateIndex();
+      } else if (filePath.includes(COMPANY_DATA_DIR)) {
+        buildCompany(mdFile);
+        updateIndexWithCompanies();
+      }
     }
   });
-  
+
   console.log('Press Ctrl+C to stop watching');
-  
+
 } else {
   // One-time build
-  buildAllPosts();
+  buildAll();
 }
