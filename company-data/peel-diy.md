@@ -1,4 +1,4 @@
-Name: Peel DIY
+Name: Peel
 URL: https://peel.diy/
 Thumbnail: /companies/peel-diy.png
 Status: Live

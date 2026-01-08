@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://use.typekit.net/tia6kbg.css">
     <link rel="stylesheet" href="/style.css">
     <link rel="icon" href="https://wims.vc/favicon.png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <title>BrandJSON - wims.vc</title>
     <meta name="description" content="Figma to JSON brand style guide converter">
     <meta property="og:title" content="BrandJSON - wims.vc">
@@ -29,6 +30,17 @@
       }
       .carousel > * {
         scroll-snap-align: start;
+      }
+      .company-content h2 {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .company-content h2::before {
+        content: attr(data-icon);
+        font-family: 'Material Icons';
+        font-size: 1.2em;
+        opacity: 0.7;
       }
     </style>
   </head>
@@ -59,7 +71,7 @@
               <h2 class="font-bold text-2xl mb-6">BrandJSON</h2>
             </div>
 
-            <div class="flex flex-col gap-4">
+            <div class="grid grid-cols-2 md:grid-cols-1 gap-4">
               <div class="flex flex-col gap-1">
                 <span class="text-sm opacity-50 font-sans font-medium">STATUS</span>
                 <span class="font-medium">Idea</span>
@@ -98,16 +110,16 @@
         <div class="md:col-span-2">
           <div class="prose prose-lg prose-orange max-w-none text-2xl flex flex-col gap-6">
             <div class="company-content">
-              <h2>The Opportunity</h2>
+              <h2 data-icon="lightbulb">The Opportunity</h2>
 <p>BrandJSON turns Figma design systems into portable JSON brand packages. Design teams spend hours manually documenting brand guidelines. Developers struggle to translate design tokens into code. This automates the entire workflow.</p>
-<h2>The Vision</h2>
+<h2 data-icon="visibility">The Vision</h2>
 <ul>
 <li><strong>Figma Plugin</strong> - One-click export of design systems to structured JSON</li>
 <li><strong>Brand Packages</strong> - Colors, typography, spacing, components as code</li>
 <li><strong>Multi-platform SDKs</strong> - Generate React, Vue, iOS, Android themes</li>
 <li><strong>Version control</strong> - Track brand evolution and distribute updates</li>
 </ul>
-<h2>Business Model</h2>
+<h2 data-icon="payments">Business Model</h2>
 <p><strong>Revenue streams:</strong></p>
 <ul>
 <li>Freemium Figma plugin (free for 1 brand, $15/mo unlimited)</li>
@@ -122,9 +134,9 @@
 <li>Convert 2% of free users to paid</li>
 <li>Add API tier for agencies</li>
 </ul>
-<h2>Market Opportunity</h2>
+<h2 data-icon="lightbulb">Market Opportunity</h2>
 <p>There are 4M+ Figma users. Every design team needs to sync design tokens with code. Current solutions (Zeroheight, Supernova) are expensive and complex. Opportunity for a simple, developer-friendly tool.</p>
-<h2>What You Get</h2>
+<h2 data-icon="inventory">What You Get</h2>
 <p>Domain, brand assets, and product spec. Technical architecture planned. Figma plugin framework ready. This is a greenfield opportunity for someone who wants to build a high-growth SaaS from scratch.</p>
 
             </div>

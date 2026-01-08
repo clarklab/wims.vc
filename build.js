@@ -186,7 +186,43 @@ function buildCompany(mdFile) {
     const { metadata, content } = parseMarkdown(mdContent);
 
     // Convert markdown to HTML
-    const htmlContent = marked(content);
+    let htmlContent = marked(content);
+
+    // Add Material Icons to h2 elements
+    const iconMap = {
+      'the opportunity': 'lightbulb',
+      'opportunity': 'lightbulb',
+      'the vision': 'visibility',
+      'vision': 'visibility',
+      'what\'s built': 'construction',
+      'whats built': 'construction',
+      'what you get': 'inventory',
+      'business model': 'payments',
+      'revenue': 'attach_money',
+      'market opportunity': 'trending_up',
+      'market': 'trending_up',
+      'path to profitability': 'show_chart',
+      'profitability': 'show_chart',
+      'go-to-market': 'rocket_launch',
+      'expansion': 'expand',
+      'current revenue': 'account_balance'
+    };
+
+    htmlContent = htmlContent.replace(/<h2>(.*?)<\/h2>/g, (match, heading) => {
+      // Decode HTML entities for matching
+      const headingLower = heading.toLowerCase().replace(/&#39;/g, "'").replace(/&apos;/g, "'");
+      let icon = 'circle'; // default icon
+
+      // Find matching icon
+      for (const [key, value] of Object.entries(iconMap)) {
+        if (headingLower.includes(key)) {
+          icon = value;
+          break;
+        }
+      }
+
+      return `<h2 data-icon="${icon}">${heading}</h2>`;
+    });
 
     // Read template
     const template = fs.readFileSync(COMPANY_TEMPLATE_FILE, 'utf8');

@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://use.typekit.net/tia6kbg.css">
     <link rel="stylesheet" href="/style.css">
     <link rel="icon" href="https://wims.vc/favicon.png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <title>Company Name - wims.vc</title>
     <meta name="description" content="Company Description">
     <meta property="og:title" content="Company Name - wims.vc">
@@ -29,6 +30,17 @@
       }
       .carousel > * {
         scroll-snap-align: start;
+      }
+      .company-content h2 {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .company-content h2::before {
+        content: attr(data-icon);
+        font-family: 'Material Icons';
+        font-size: 1.2em;
+        opacity: 0.7;
       }
     </style>
   </head>
@@ -59,7 +71,7 @@
               <h2 class="font-bold text-2xl mb-6">Company Name</h2>
             </div>
 
-            <div class="flex flex-col gap-4">
+            <div class="grid grid-cols-2 md:grid-cols-1 gap-4">
               <div class="flex flex-col gap-1">
                 <span class="text-sm opacity-50 font-sans font-medium">STATUS</span>
                 <span class="font-medium">Company Status</span>

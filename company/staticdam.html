@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://use.typekit.net/tia6kbg.css">
     <link rel="stylesheet" href="/style.css">
     <link rel="icon" href="https://wims.vc/favicon.png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <title>StaticDAM - wims.vc</title>
     <meta name="description" content="Digital asset management for static sites">
     <meta property="og:title" content="StaticDAM - wims.vc">
@@ -29,6 +30,17 @@
       }
       .carousel > * {
         scroll-snap-align: start;
+      }
+      .company-content h2 {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .company-content h2::before {
+        content: attr(data-icon);
+        font-family: 'Material Icons';
+        font-size: 1.2em;
+        opacity: 0.7;
       }
     </style>
   </head>
@@ -59,7 +71,7 @@
               <h2 class="font-bold text-2xl mb-6">StaticDAM</h2>
             </div>
 
-            <div class="flex flex-col gap-4">
+            <div class="grid grid-cols-2 md:grid-cols-1 gap-4">
               <div class="flex flex-col gap-1">
                 <span class="text-sm opacity-50 font-sans font-medium">STATUS</span>
                 <span class="font-medium">Live</span>
@@ -98,16 +110,16 @@
         <div class="md:col-span-2">
           <div class="prose prose-lg prose-orange max-w-none text-2xl flex flex-col gap-6">
             <div class="company-content">
-              <h2>The Opportunity</h2>
+              <h2 data-icon="lightbulb">The Opportunity</h2>
 <p>StaticDAM is a modern Digital Asset Management (DAM) system built specifically for static sites and JAMstack applications. Every development team struggles with managing images, videos, and assets across CDNs. This solves that problem with a developer-first approach.</p>
-<h2>What&#39;s Built</h2>
+<h2 data-icon="construction">What&#39;s Built</h2>
 <ul>
 <li><strong>Asset pipeline</strong> - Automatic optimization, resizing, and CDN distribution</li>
 <li><strong>Developer API</strong> - REST + GraphQL endpoints for asset management</li>
 <li><strong>Edge-optimized</strong> - Built on Cloudflare Workers for global performance</li>
 <li><strong>Modern stack</strong> - Next.js frontend with real-time updates</li>
 </ul>
-<h2>Business Model</h2>
+<h2 data-icon="payments">Business Model</h2>
 <p><strong>Revenue model:</strong></p>
 <ul>
 <li>Tiered SaaS pricing based on storage and bandwidth</li>
@@ -122,9 +134,9 @@
 <li>Developer community and documentation</li>
 <li>Content marketing via dev.to and technical blogs</li>
 </ul>
-<h2>Market Opportunity</h2>
+<h2 data-icon="lightbulb">Market Opportunity</h2>
 <p>The JAMstack market is growing 30% YoY. Every static site deployment needs asset management. Cloudinary and Imgix are expensive enterprise solutions - there&#39;s space for a developer-focused alternative.</p>
-<h2>What You Get</h2>
+<h2 data-icon="inventory">What You Get</h2>
 <p>Full production codebase with Cloudflare Workers backend. Next.js admin dashboard. API documentation. Ready for Stripe integration. Strong technical foundation that just needs payment setup and marketing push.</p>
 
             </div>
