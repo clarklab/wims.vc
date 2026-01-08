@@ -20,6 +20,15 @@
     <meta property="og:site_name" content="wims.vc">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
+      @view-transition {
+        navigation: auto;
+      }
+      ::view-transition-old(root),
+      ::view-transition-new(root) {
+        animation-duration: 0.3s;
+      }
+    </style>
+    <style>
       @media (min-width: 768px) {
         .sticky-sidebar {
           position: sticky;
@@ -300,7 +309,7 @@
       <div class="carousel-container">
         <div class="carousel" id="carousel">
           <div class="carousel-slide">
-            <img src="/companies/tile-staticdam.png" alt="StaticDAM">
+            <img src="/companies/tile-staticdam.png" alt="StaticDAM" style="view-transition-name: tile-staticdam">
           </div>
           <div class="carousel-slide">
             <img src="/companies/slide-staticdam-1.png" alt="StaticDAM">

@@ -297,6 +297,10 @@ function buildCompany(mdFile) {
     const price = metadata.price || '$7,500';
     finalHtml = finalHtml.replace(/Company Price/g, price);
 
+    // Replace Company Tile Name (for view transitions)
+    const tileName = `tile-${slug}`;
+    finalHtml = finalHtml.replace(/Company Tile Name/g, tileName);
+
     // Replace Company Content
     finalHtml = finalHtml.replace(/Company Content/g, htmlContent);
 
@@ -356,7 +360,7 @@ function updateIndexWithCompanies() {
     const companyGridHTML = companies.map(company => {
       return `            <div class="company">
                 <a href="/company/${company.slug}.html">
-                    <img class="aspect-video object-cover rounded-lg" src="${company.thumbnail}" alt="${company.name}">
+                    <img class="aspect-video object-cover rounded-lg" src="${company.thumbnail}" alt="${company.name}" style="view-transition-name: tile-${company.slug}">
                 </a>
             </div>`;
     }).join('\n');
