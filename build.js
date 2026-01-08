@@ -309,6 +309,27 @@ function buildCompany(mdFile) {
     finalHtml = finalHtml.replace(/subject=Buy%20Company%20Slug/g, `subject=Buy%20${encodeURIComponent(name)}`);
     finalHtml = finalHtml.replace(/subject=CMO%20Company%20Slug/g, `subject=CMO%20${encodeURIComponent(name)}`);
 
+    // Generate company tiles (excluding current company)
+    const allCompanies = getAllCompanies();
+    const otherCompanies = allCompanies.filter(company => company.slug !== slug);
+
+    let companyTilesHtml = otherCompanies.map(company => {
+      return `          <div class="company">
+            <a href="/company/${company.htmlFile}">
+              <img class="aspect-video object-cover rounded-lg" src="${company.thumbnail}" alt="${company.name}" style="view-transition-name: tile-${company.slug}">
+            </a>
+          </div>`;
+    }).join('\n');
+
+    // Add Apply tile
+    companyTilesHtml += `\n          <div class="company">
+            <a href="/contact" class="aspect-video rounded-lg bg-red-500/20 hover:bg-red-500/30 transition-colors flex items-center justify-center text-red-600 font-bold text-xl" style="font-family: 'Google Sans Flex', sans-serif;">
+              Apply
+            </a>
+          </div>`;
+
+    finalHtml = finalHtml.replace(/Company Tiles/g, companyTilesHtml);
+
     // Write HTML file
     fs.writeFileSync(htmlPath, finalHtml);
     console.log(`✅ Built company page: ${htmlFile}`);
