@@ -6,6 +6,7 @@ Payments: Not set up
 Backend: Built
 Business Model: Subscription
 Description: Figma to JSON brand style guide converter
+Price: $25,000
 
 ## The Elevator Pitch
 
