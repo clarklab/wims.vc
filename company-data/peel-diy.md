@@ -1,42 +1,84 @@
 Name: Peel
 URL: https://peel.diy/
-Thumbnail: /companies/peel-diy.png
+Thumbnail: /companies/tile-peel.png
 Status: Live
-Payments: Stripe
-Backend: Next.js
-Frontend: React + Tailwind
-Business Model: SaaS + Marketplace
-Description: Custom sticker and label design platform
+Payments: Enabled
+Backend: Built
+Business Model: Token Arbitrage
+Price: $12,500
+Description: AI image generation platform
+
+## The Elevator Pitch
+
+<p class="elevator-pitch">Peel is the easiest way for people and brands to make and edit images with AI using Google's latest image model, Nano Banana Pro.</p>
+
+## The Vision
+
+Allow anyone to quickly access the cutting edge AI model, with no API keys or complicated setup. It's also a powerful work tool, with custom batch and preset options that makes it a better option than even the native AI Studio editor.
 
 ## The Opportunity
 
-Peel DIY is a complete custom sticker and label design platform that makes it dead simple for anyone to create professional-quality stickers. The market for custom stickers and labels is massive - from small businesses to hobbyists, everyone needs custom labels.
+Most AI gateways, or direct AI API access, provides tokens at cost. Most end-user AI setup is complex. We can make that easy, and sell tokens at a slight premium, with our easier-to-use app bringing value that keeps people buying tokens.
 
-## What's Built
+## What's Already Built
 
-- **Full design editor** - In-browser sticker design tool with templates
-- **Payment processing** - Stripe integration for seamless transactions
-- **Production-ready stack** - Built on Next.js with modern React and Tailwind
-- **E-commerce ready** - Complete checkout flow and order management
+<div class="features-grid">
+<div class="feature-card">
+<div class="feature-header">
+<span class="feature-icon">language</span>
+<span class="feature-title">Marketing Site</span>
+</div>
+<span class="feature-desc">Complete site with landing pages and documentation</span>
+</div>
+<div class="feature-card">
+<div class="feature-header">
+<span class="feature-icon">apps</span>
+<span class="feature-title">Working App</span>
+</div>
+<span class="feature-desc">Users can sign up today and make images now</span>
+</div>
+<div class="feature-card">
+<div class="feature-header">
+<span class="feature-icon">payments</span>
+<span class="feature-title">Payments</span>
+</div>
+<span class="feature-desc">Selling tokens with Polar and tracking with Supabase</span>
+</div>
+<div class="feature-card">
+<div class="feature-header">
+<span class="feature-icon">palette</span>
+<span class="feature-title">Brand</span>
+</div>
+<span class="feature-desc">Premium domain (peel.diy) and branding system</span>
+</div>
+</div>
 
-## Business Model
+## The Numbers
 
-**Revenue streams:**
-- Print-on-demand markup (30-40% margin)
-- Premium template marketplace
-- Subscription tier for power users
-- White-label licensing
+<div class="numbers-grid">
+<div class="numbers-column">
+<h3>250 Monthly Users</h3>
+<ul>
+<li>$2,750/mo revenue (30% markup)</li>
+<li>$825/mo profit</li>
+<li>Work and SaaS sales ready</li>
+<li><a href="/contact" class="underline decoration-red-500">Can you do better?</a></li>
+</ul>
+</div>
+<div class="numbers-column">
+<h3>1k Monthly Users</h3>
+<ul>
+<li>$11,000/mo revenue (30% markup)</li>
+<li>$3,300/mo profit</li>
+<li>Work and SaaS sales ready</li>
+<li><a href="/contact" class="underline decoration-red-500">Can you do better?</a></li>
+</ul>
+</div>
+</div>
 
-**Path to profitability:**
-- Partner with 2-3 print fulfillment services
-- Build template marketplace (creators get 50% split)
-- Target small businesses and Etsy sellers
-- SEO + Pinterest marketing strategy
+## Currently Seeking
 
-## Market Opportunity
-
-The custom printing market is worth $10B+ and growing. DIY craft culture is exploding on social media. Low customer acquisition cost through organic social and Pinterest.
-
-## What You Get
-
-Complete codebase, domain, and all assets. Stripe account can be transferred. Print fulfillment partnerships are easy to establish. Immediate revenue potential with low overhead.
+<div class="job-card">
+<div class="job-title">Marketing Co-Founder</div>
+<div class="job-desc">A founding CMO who can target creators, small businesses, and startup marketing teams. Immediate revenue potential with working product. No salary, but offering a full <strong>25% stake</strong> to the right person.</div>
+</div>

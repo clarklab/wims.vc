@@ -168,6 +168,17 @@ function getAllCompanies() {
     }
   }).filter(company => company !== null);
 
+  // Custom sort order for companies
+  const sortOrder = ['brandjson', 'peel-diy', 'staticdam', 'publicpickleballcourts'];
+  companies.sort((a, b) => {
+    const aIndex = sortOrder.indexOf(a.slug);
+    const bIndex = sortOrder.indexOf(b.slug);
+    // If not in sortOrder, put at end
+    const aOrder = aIndex === -1 ? sortOrder.length : aIndex;
+    const bOrder = bIndex === -1 ? sortOrder.length : bIndex;
+    return aOrder - bOrder;
+  });
+
   return companies;
 }
 
@@ -253,11 +264,25 @@ function buildCompany(mdFile) {
     // Replace Company Thumbnail
     finalHtml = finalHtml.replace(/Company Thumbnail/g, thumbnail);
 
+    // Replace Company Slide 1 (second carousel image)
+    const slideSlug = slug === 'peel-diy' ? 'peel' : slug;
+    const slide1Path = `/companies/slide-${slideSlug}-1.png`;
+    finalHtml = finalHtml.replace(/Company Slide 1/g, slide1Path);
+
     // Replace Company URL
     finalHtml = finalHtml.replace(/Company URL/g, url);
 
-    // Replace Company Status
-    finalHtml = finalHtml.replace(/Company Status/g, status);
+    // Replace Company Domain Link (extract domain from URL and make it a link)
+    const domainMatch = url.match(/https?:\/\/([^\/]+)/);
+    const domain = domainMatch ? domainMatch[1] : url;
+    const domainLink = `<a href="${url}" target="_blank">${domain}</a>`;
+    finalHtml = finalHtml.replace(/Company Domain Link/g, domainLink);
+
+    // Replace Company Status (add red dot if Live)
+    const statusDisplay = status === 'Live'
+      ? '<span style="display:inline-block;width:8px;height:8px;background:#dc2626;border-radius:50%;margin-right:6px;"></span>Live'
+      : status;
+    finalHtml = finalHtml.replace(/Company Status/g, statusDisplay);
 
     // Replace Company Payments
     finalHtml = finalHtml.replace(/Company Payments/g, payments);
@@ -265,11 +290,12 @@ function buildCompany(mdFile) {
     // Replace Company Backend
     finalHtml = finalHtml.replace(/Company Backend/g, backend);
 
-    // Replace Company Frontend
-    finalHtml = finalHtml.replace(/Company Frontend/g, frontend);
-
     // Replace Company Business Model
     finalHtml = finalHtml.replace(/Company Business Model/g, businessModel);
+
+    // Replace Company Price
+    const price = metadata.price || '$7,500';
+    finalHtml = finalHtml.replace(/Company Price/g, price);
 
     // Replace Company Content
     finalHtml = finalHtml.replace(/Company Content/g, htmlContent);
@@ -329,16 +355,24 @@ function updateIndexWithCompanies() {
     // Generate company grid HTML
     const companyGridHTML = companies.map(company => {
       return `            <div class="company">
-                <a href="/company/${company.slug}">
+                <a href="/company/${company.slug}.html">
                     <img class="aspect-video object-cover rounded-lg" src="${company.thumbnail}" alt="${company.name}">
                 </a>
             </div>`;
     }).join('\n');
 
+    // Add Apply tile at the end
+    const applyTile = `            <div class="company">
+                <a href="/contact" class="aspect-video rounded-lg bg-red-500/20 hover:bg-red-500/30 transition-colors flex items-center justify-center text-red-600 font-bold text-xl" style="font-family: 'Google Sans Flex', sans-serif;">
+                    Apply
+                </a>
+            </div>`;
+    const companyGridWithApply = companyGridHTML + '\n' + applyTile;
+
     // Replace the companies section
     const updatedContent = indexContent.replace(
       /(<div class="companies grid grid-cols-2 md:grid-cols-3 gap-8">)[\s\S]*?(<\/div>\s*<\/div>)/,
-      `$1\n${companyGridHTML}\n        $2`
+      `$1\n${companyGridWithApply}\n        $2`
     );
 
     // Write updated index.htm

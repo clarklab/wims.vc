@@ -31,6 +31,24 @@
         <label for="email" class="absolute text-base font-medium text-orange-950/60 left-4 top-6.5 transition-all peer-focus:-translate-y-4 peer-focus:text-sm peer-focus:text-orange-500 peer-[:not(:placeholder-shown)]:-translate-y-4 peer-[:not(:placeholder-shown)]:text-sm">Email</label>
       </div>
 
+      <div class="relative flex items-center">
+        <label for="topic" class="text-base font-medium text-orange-500 px-4 py-4 bg-white border border-r-0 border-orange-200 rounded-l-lg">Topic:</label>
+        <select id="topic" name="topic" class="px-4 py-4 rounded-r-lg bg-white border border-orange-200 focus:outline-none focus:ring-2 focus:ring-orange-500 flex-1 appearance-none cursor-pointer text-base">
+          <option value="general">General Inquiry</option>
+          <option value="brandjson">Brandjson.com</option>
+          <option value="peel">Peel</option>
+          <option value="staticdam">staticDAM</option>
+          <option value="publicpickleballcourts">PublicPickleballCourts</option>
+          <option value="apply">Apply</option>
+          <option value="help">Help</option>
+        </select>
+        <div class="pointer-events-none absolute right-0 flex items-center px-4 text-orange-950/60">
+          <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </div>
+      </div>
+
       <div class="relative">
         <input type="url" id="link" name="link" placeholder=" " class="px-4 pt-6 pb-3 rounded-lg bg-white border border-orange-200 focus:outline-none focus:ring-2 focus:ring-orange-500 w-full peer">
         <label for="link" class="absolute text-base font-medium text-orange-950/60 left-4 top-6.5 transition-all peer-focus:-translate-y-4 peer-focus:text-sm peer-focus:text-orange-500 peer-[:not(:placeholder-shown)]:-translate-y-4 peer-[:not(:placeholder-shown)]:text-sm">Link (Optional)</label>
@@ -53,13 +71,14 @@
     </form>
 
     <div class="footer w-full flex flex-col gap-2">
-        <h1 class="font-bold w-full">wims.vc</h1>
+        <h1 class="font-bold w-full" style="font-family: 'Google Sans Flex', sans-serif;">wims.vc</h1>
+        <p class="font-sans text-base opacity-50 font-medium"><a href="https://x.com/clarklab">@clarklab</a> · <a href="https://x.com/angiedoes">@angiedoes</a></p>
     </div>
 
     <div class="footer w-full flex flex-col md:flex-row gap-4 font-sans text-base opacity-50 font-medium">
         <a href="/contact">Contact</a>
-        <a href="/privacy">Privacy Policy</a>
-        <a href="/terms">Terms of Service</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Service</a>
     </div>
   </body>
 </html>

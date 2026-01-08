@@ -14,7 +14,7 @@
     <meta name="description" content="Figma to JSON brand style guide converter">
     <meta property="og:title" content="BrandJSON - wims.vc">
     <meta property="og:description" content="Figma to JSON brand style guide converter">
-    <meta property="og:image" content="/companies/brandjson.png">
+    <meta property="og:image" content="/companies/tile-brandjson.png">
     <meta property="og:url" content="https://wims.vc/company/brandjson">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="wims.vc">
@@ -27,17 +27,58 @@
           align-self: flex-start;
         }
       }
-      .carousel {
-        scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
+      .carousel-container {
+        position: relative;
+        overflow: hidden;
+        border-radius: 0.5rem;
       }
-      .carousel > * {
-        scroll-snap-align: start;
+      .carousel {
+        display: flex;
+        touch-action: pan-y pinch-zoom;
+        will-change: transform;
+        cursor: grab;
+      }
+      .carousel.dragging {
+        cursor: grabbing;
+      }
+      .carousel.smooth {
+        transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+      .carousel-slide {
+        flex: 0 0 100%;
+        min-width: 0;
+      }
+      .carousel-slide img {
+        width: 100%;
+        aspect-ratio: 16/9;
+        object-fit: cover;
+        border-radius: 0.5rem;
+        pointer-events: none;
+        user-select: none;
+      }
+      .carousel-dots {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 1rem;
+      }
+      .carousel-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(234, 88, 12, 0.3);
+        border: none;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.2s;
+      }
+      .carousel-dot.active {
+        background: #ea580c;
+        transform: scale(1.2);
+      }
+      .carousel-dot:hover {
+        background: rgba(234, 88, 12, 0.6);
       }
       .company-content h2 {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
         font-family: 'Google Sans Flex', sans-serif;
         font-size: 1rem;
         font-weight: 800;
@@ -50,21 +91,15 @@
       .company-content h2:first-child {
         margin-top: 0;
       }
-      .company-content h2::before {
-        content: attr(data-icon);
-        font-family: 'Material Icons';
-        font-size: 1.5em;
-        text-transform: none;
-        background: linear-gradient(135deg, #f97316, #ea580c);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
       .company-content p {
         font-size: 1.25rem;
         line-height: 1.8;
         margin-bottom: 1.5rem;
         color: rgba(67, 20, 7, 0.9);
+      }
+      .company-content .elevator-pitch {
+        font-size: 1.75rem;
+        line-height: 1.6;
       }
       .company-content p strong {
         color: #ea580c;
@@ -101,66 +136,347 @@
         font-weight: 700;
         margin-bottom: 0.25rem;
       }
+      /* Vision section - plain text list */
+      .vision-list {
+        list-style: none;
+        padding: 0;
+        margin: 1.5rem 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+      .vision-list li {
+        font-size: 1.125rem;
+        line-height: 1.7;
+        color: rgba(67, 20, 7, 0.9);
+        padding-left: 1.5rem;
+        position: relative;
+        background: none;
+        border: none;
+        border-radius: 0;
+      }
+      .vision-list li::before {
+        content: '•';
+        position: absolute;
+        left: 0;
+        color: #ea580c;
+        font-weight: bold;
+      }
+      .vision-list li strong {
+        color: #ea580c;
+        font-weight: 700;
+        display: inline;
+        margin-bottom: 0;
+      }
+      /* Numbers section - stacked columns */
+      .numbers-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        margin: 1.5rem 0;
+      }
+      .numbers-column {
+        background: rgba(255, 237, 213, 0.4);
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+      }
+      .numbers-column h3 {
+        font-family: 'Google Sans Flex', sans-serif;
+        font-size: 0.875rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #ea580c;
+        margin-bottom: 1rem;
+      }
+      .numbers-column ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .numbers-column ul li {
+        font-size: 1rem;
+        line-height: 1.6;
+        color: rgba(67, 20, 7, 0.9);
+        background: none !important;
+        border: none !important;
+        border-left: none !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+      }
+      .numbers-column ul li::before {
+        content: none !important;
+      }
+      .numbers-column ul li strong {
+        display: inline;
+        margin-bottom: 0;
+      }
+      /* Features grid - What's Already Built */
+      .features-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin: 1.5rem 0;
+      }
+      @media (max-width: 640px) {
+        .features-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .feature-card {
+        background: rgba(255, 237, 213, 0.4);
+        border-radius: 0.75rem;
+        padding: 1.25rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .feature-card .feature-header {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .feature-card .feature-icon {
+        font-family: 'Material Icons';
+        font-size: 1.25rem;
+        color: #ea580c;
+      }
+      .feature-card .feature-title {
+        font-family: 'Google Sans Flex', sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        color: #ea580c;
+      }
+      .feature-card .feature-desc {
+        font-size: 0.9375rem;
+        line-height: 1.5;
+        color: rgba(67, 20, 7, 0.8);
+      }
+      /* Job listing card - Currently Seeking */
+      .job-card {
+        background: #dc2626;
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+      }
+      .job-card .job-title {
+        font-family: 'Google Sans Flex', sans-serif;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 0.75rem;
+      }
+      .job-card .job-desc {
+        font-size: 1.0625rem;
+        line-height: 1.7;
+        color: #ffffff;
+      }
+      /* Numbers CTA link */
+      .numbers-column a {
+        font-family: 'Google Sans Flex', sans-serif;
+        font-weight: 500;
+      }
+      /* Truncate long domain names */
+      .domain-truncate {
+        display: block;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
     </style>
   </head>
   <body class="bg-orange-50/60 text-orange-950">
     <!-- Header -->
-    <div class="max-w-7xl mx-auto p-8 pt-12 md:pt-24">
+    <div class="max-w-3xl mx-auto p-8 pt-12 md:pt-24">
       <a href="/"><img src="/w.svg" alt="wims.vc" class="w-12 inline-block"></a>
     </div>
 
     <!-- Carousel Section -->
-    <div class="max-w-7xl mx-auto px-8 pb-12">
-      <div class="carousel flex gap-4 overflow-x-auto pb-4">
-        <!-- Carousel images will be inserted here -->
-        <div class="flex-shrink-0 w-full">
-          <img src="/companies/brandjson.png" alt="BrandJSON" class="w-full aspect-video object-cover rounded-lg">
+    <div class="max-w-3xl mx-auto px-8 pb-12">
+      <div class="carousel-container">
+        <div class="carousel" id="carousel">
+          <div class="carousel-slide">
+            <img src="/companies/tile-brandjson.png" alt="BrandJSON">
+          </div>
+          <div class="carousel-slide">
+            <img src="/companies/slide-brandjson-1.png" alt="BrandJSON">
+          </div>
         </div>
       </div>
+      <div class="carousel-dots" id="carousel-dots"></div>
     </div>
 
+    <script>
+      (function() {
+        const carousel = document.getElementById('carousel');
+        const dotsContainer = document.getElementById('carousel-dots');
+        const slides = carousel.querySelectorAll('.carousel-slide');
+        const slideCount = slides.length;
+
+        let currentIndex = 0;
+        let startX = 0;
+        let currentX = 0;
+        let isDragging = false;
+        let startTranslate = 0;
+        let autoAdvanceInterval = null;
+
+        // Create dots
+        slides.forEach((_, i) => {
+          const dot = document.createElement('button');
+          dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+          dot.addEventListener('click', () => {
+            stopAutoAdvance();
+            goToSlide(i);
+          });
+          dotsContainer.appendChild(dot);
+        });
+
+        function updateDots() {
+          document.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+            dot.classList.toggle('active', i === currentIndex);
+          });
+        }
+
+        function getTranslateX() {
+          return -currentIndex * 100;
+        }
+
+        function setTransform(percent, smooth = false) {
+          carousel.classList.toggle('smooth', smooth);
+          carousel.style.transform = `translateX(${percent}%)`;
+        }
+
+        function goToSlide(index, smooth = true) {
+          currentIndex = ((index % slideCount) + slideCount) % slideCount;
+          setTransform(getTranslateX(), smooth);
+          updateDots();
+        }
+
+        function startAutoAdvance() {
+          if (autoAdvanceInterval) return;
+          autoAdvanceInterval = setInterval(() => {
+            goToSlide(currentIndex + 1);
+          }, 6000);
+        }
+
+        function stopAutoAdvance() {
+          if (autoAdvanceInterval) {
+            clearInterval(autoAdvanceInterval);
+            autoAdvanceInterval = null;
+          }
+        }
+
+        function handleDragStart(e) {
+          stopAutoAdvance();
+          isDragging = true;
+          carousel.classList.add('dragging');
+          startX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+          startTranslate = getTranslateX();
+          carousel.classList.remove('smooth');
+        }
+
+        function handleDragMove(e) {
+          if (!isDragging) return;
+          e.preventDefault();
+          currentX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+          const diff = currentX - startX;
+          const containerWidth = carousel.parentElement.offsetWidth;
+          const percentMove = (diff / containerWidth) * 100;
+          setTransform(startTranslate + percentMove, false);
+        }
+
+        function handleDragEnd() {
+          if (!isDragging) return;
+          isDragging = false;
+          carousel.classList.remove('dragging');
+
+          const diff = currentX - startX;
+          const containerWidth = carousel.parentElement.offsetWidth;
+          const threshold = containerWidth * 0.15;
+
+          if (Math.abs(diff) > threshold) {
+            if (diff > 0) {
+              goToSlide(currentIndex - 1);
+            } else {
+              goToSlide(currentIndex + 1);
+            }
+          } else {
+            goToSlide(currentIndex);
+          }
+        }
+
+        // Mouse events
+        carousel.addEventListener('mousedown', handleDragStart);
+        window.addEventListener('mousemove', handleDragMove);
+        window.addEventListener('mouseup', handleDragEnd);
+
+        // Touch events
+        carousel.addEventListener('touchstart', handleDragStart, { passive: true });
+        carousel.addEventListener('touchmove', handleDragMove, { passive: false });
+        carousel.addEventListener('touchend', handleDragEnd);
+
+        // Prevent context menu on long press
+        carousel.addEventListener('contextmenu', e => e.preventDefault());
+
+        // Initialize
+        setTransform(0, false);
+        startAutoAdvance();
+      })();
+    </script>
+
     <!-- Two Column Layout -->
-    <div class="max-w-7xl mx-auto px-8 pb-24">
+    <div class="max-w-3xl mx-auto px-8 pb-24">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
 
         <!-- Left Column - Stats (Sticky on Desktop) -->
         <div class="md:col-span-1">
           <div class="sticky-sidebar flex flex-col gap-6 text-lg">
             <div>
-              <h2 class="font-bold text-2xl mb-6">BrandJSON</h2>
+              <h2 class="font-bold text-3xl mb-6" style="font-family: 'Google Sans Flex', sans-serif;">BrandJSON</h2>
             </div>
 
             <div class="grid grid-cols-2 md:grid-cols-1 gap-4">
               <div class="flex flex-col gap-1">
                 <span class="text-sm opacity-50 font-sans font-medium">STATUS</span>
-                <span class="font-medium">Idea</span>
+                <span class="font-medium"><span style="display:inline-block;width:8px;height:8px;background:#dc2626;border-radius:50%;margin-right:6px;"></span>Live</span>
+              </div>
+
+              <div class="flex flex-col gap-1">
+                <span class="text-sm opacity-50 font-sans font-medium">DOMAIN</span>
+                <span class="font-medium domain-truncate"><a href="https://brandjson.com/" target="_blank">brandjson.com</a></span>
               </div>
 
               <div class="flex flex-col gap-1">
                 <span class="text-sm opacity-50 font-sans font-medium">PAYMENTS</span>
-                <span class="font-medium">Not Set Up</span>
+                <span class="font-medium">Not set up</span>
               </div>
 
               <div class="flex flex-col gap-1">
                 <span class="text-sm opacity-50 font-sans font-medium">BACKEND</span>
-                <span class="font-medium">None</span>
-              </div>
-
-              <div class="flex flex-col gap-1">
-                <span class="text-sm opacity-50 font-sans font-medium">FRONTEND</span>
-                <span class="font-medium">Prototype</span>
+                <span class="font-medium">Built</span>
               </div>
 
               <div class="flex flex-col gap-1">
                 <span class="text-sm opacity-50 font-sans font-medium">BUSINESS MODEL</span>
-                <span class="font-medium">SaaS + API</span>
+                <span class="font-medium">Subscription</span>
               </div>
             </div>
 
-            <div class="pt-4">
+            <div class="pt-4 flex flex-col gap-2">
               <a href="https://brandjson.com/" target="_blank" class="text-orange-600 hover:text-orange-700 font-medium text-base font-sans">
                 Visit Site →
               </a>
+              <button id="copy-pitch" class="text-orange-600 hover:text-orange-700 font-medium text-base font-sans flex items-center gap-2 text-left cursor-pointer">
+                <span id="copy-text">Copy Pitch Text</span>
+                <svg width="16" height="16" viewBox="0 0 112 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M83.9592 65.2921C56.3085 59.0473 52.0219 54.7661 45.7765 27.1095C45.4901 25.8438 44.3651 24.948 43.0629 24.948C41.7609 24.948 40.6359 25.849 40.3493 27.1095C34.1045 54.7601 29.8233 59.0468 2.16667 65.2921C0.90104 65.5786 0 66.7036 0 68.0057C0 69.3079 0.90104 70.4276 2.16667 70.7193C29.8173 76.9641 34.0987 81.2505 40.3493 108.902C40.6358 110.168 41.7608 111.063 43.0629 111.063C44.365 111.063 45.49 110.162 45.7765 108.902C52.0213 81.2513 56.3025 76.97 83.9592 70.7193C85.2248 70.4329 86.1207 69.3079 86.1207 68.0057C86.1207 66.7036 85.2196 65.5839 83.9592 65.2921Z" fill="currentColor"/>
+                  <path d="M108.959 22.2401C94.2619 18.9224 92.1939 16.8547 88.8766 2.16147C88.5901 0.895839 87.4651 0 86.163 0C84.8609 0 83.7411 0.895839 83.4494 2.16147C80.1316 16.8588 78.0639 18.9215 63.3707 22.2401C62.1051 22.5266 61.2092 23.6516 61.2092 24.9537C61.2092 26.2558 62.1051 27.3756 63.3707 27.6673C78.068 30.9851 80.1307 33.0528 83.4494 47.75C83.7358 49.0156 84.8608 49.9115 86.163 49.9115C87.465 49.9115 88.5848 49.0104 88.8766 47.75C92.1943 33.0527 94.262 30.9847 108.959 27.6673C110.225 27.3809 111.121 26.2559 111.121 24.9537C111.121 23.6517 110.22 22.5319 108.959 22.2401Z" fill="currentColor"/>
+                </svg>
+              </button>
             </div>
           </div>
         </div>
@@ -168,34 +484,72 @@
         <!-- Right Column - Content -->
         <div class="md:col-span-2">
           <div class="company-content">
-            <h2 data-icon="lightbulb">The Opportunity</h2>
-<p>BrandJSON turns Figma design systems into portable JSON brand packages. Design teams spend hours manually documenting brand guidelines. Developers struggle to translate design tokens into code. This automates the entire workflow.</p>
+            <h2 data-icon="circle">The Elevator Pitch</h2>
+<p class="elevator-pitch">Create a simple and shareable public brand guide from a single Figma file.</p>
+
 <h2 data-icon="visibility">The Vision</h2>
+<p>A single source of truth for your brands logos, colors, fonts, icons, and more. Presented in a simple web format, with full JSON support for your developers.</p>
+<h2 data-icon="lightbulb">The Opportunity</h2>
+<p>Design teams spend hours manually documenting brand guidelines. Developers struggle to translate design tokens into code. There are 4M+ Figma users who need to sync design tokens with code. Current solutions (Zeroheight, Supernova) are expensive and complex. Opportunity for a simple, developer-friendly tool, for a cheap monthly subscription.</p>
+<h2 data-icon="circle">What&#39;s Already Built</h2>
+<div class="features-grid">
+<div class="feature-card">
+<div class="feature-header">
+<span class="feature-icon">extension</span>
+<span class="feature-title">Figma Plugin</span>
+</div>
+<span class="feature-desc">Working native Figma plugin for pulling brand assets</span>
+</div>
+<div class="feature-card">
+<div class="feature-header">
+<span class="feature-icon">language</span>
+<span class="feature-title">Marketing Site</span>
+</div>
+<span class="feature-desc">With landing pages and documentation</span>
+</div>
+<div class="feature-card">
+<div class="feature-header">
+<span class="feature-icon">cloud</span>
+<span class="feature-title">Architecture</span>
+</div>
+<span class="feature-desc">Hosting and deployment via GitHub and Netlify</span>
+</div>
+<div class="feature-card">
+<div class="feature-header">
+<span class="feature-icon">palette</span>
+<span class="feature-title">Brand</span>
+</div>
+<span class="feature-desc">Domain name (brandjson.com) and Figma community listing</span>
+</div>
+</div>
+
+<h2 data-icon="circle">The Numbers</h2>
+<div class="numbers-grid">
+<div class="numbers-column">
+<h3>250 Monthly Users</h3>
 <ul>
-<li><strong>Figma Plugin</strong> - One-click export of design systems to structured JSON</li>
-<li><strong>Brand Packages</strong> - Colors, typography, spacing, components as code</li>
-<li><strong>Multi-platform SDKs</strong> - Generate React, Vue, iOS, Android themes</li>
-<li><strong>Version control</strong> - Track brand evolution and distribute updates</li>
+<li>$875/mo revenue (at $3.50/user)</li>
+<li>$800/mo profit (static hosting!)</li>
+<li>Needed by ALL teams</li>
+<li><a href="/contact" class="underline decoration-red-500">Can you do better?</a></li>
 </ul>
-<h2 data-icon="payments">Business Model</h2>
-<p><strong>Revenue streams:</strong></p>
+</div>
+<div class="numbers-column">
+<h3>1k Monthly Users</h3>
 <ul>
-<li>Freemium Figma plugin (free for 1 brand, $15/mo unlimited)</li>
-<li>API access for automated workflows ($29/mo)</li>
-<li>Enterprise white-label solution ($299/mo)</li>
-<li>Design-to-code marketplace (take 20% commission)</li>
+<li>$3,750/mo revenue (at $3.75/user)</li>
+<li>$3,200/mo profit (static hosting!)</li>
+<li>Needed by ALL teams</li>
+<li><a href="/contact" class="underline decoration-red-500">Can you do better?</a></li>
 </ul>
-<p><strong>Path to first revenue:</strong></p>
-<ul>
-<li>Build core Figma plugin (3-4 weeks)</li>
-<li>Launch on Figma Community</li>
-<li>Convert 2% of free users to paid</li>
-<li>Add API tier for agencies</li>
-</ul>
-<h2 data-icon="lightbulb">Market Opportunity</h2>
-<p>There are 4M+ Figma users. Every design team needs to sync design tokens with code. Current solutions (Zeroheight, Supernova) are expensive and complex. Opportunity for a simple, developer-friendly tool.</p>
-<h2 data-icon="inventory">What You Get</h2>
-<p>Domain, brand assets, and product spec. Technical architecture planned. Figma plugin framework ready. This is a greenfield opportunity for someone who wants to build a high-growth SaaS from scratch.</p>
+</div>
+</div>
+
+<h2 data-icon="circle">Currently Seeking</h2>
+<div class="job-card">
+<div class="job-title">Marketing Co-Founder</div>
+<div class="job-desc">A founding CMO who can target creators, small businesses, and startup marketing teams. Immediate revenue potential with working product. No salary, but offering a full <strong>25% stake</strong> to the right person.</div>
+</div>
 
           </div>
         </div>
@@ -203,35 +557,136 @@
     </div>
 
     <!-- CTA Section -->
-    <div class="max-w-7xl mx-auto px-8 pb-24">
-      <div class="bg-gradient-to-br from-orange-100 to-orange-50 border-2 border-orange-200 rounded-2xl p-12 flex flex-col gap-8 items-center text-center">
-        <h2 class="text-4xl md:text-5xl font-bold">Interested in BrandJSON?</h2>
+    <div class="max-w-3xl mx-auto px-8 pb-24">
+      <div class="rounded-2xl p-12 flex flex-col gap-8 items-center text-center border-2 border-red-600">
+        <h2 class="text-4xl md:text-5xl font-bold" style="font-family: 'Google Sans Flex', sans-serif;">Interested in BrandJSON?</h2>
         <p class="text-xl md:text-2xl opacity-75 max-w-2xl">
           Purchase this complete business for $7,500 or join as CMO to build it together.
         </p>
         <div class="flex flex-col md:flex-row gap-4 w-full md:w-auto">
           <a href="/contact?subject=Buy%20BrandJSON"
-             class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-4 px-8 rounded-lg text-xl transition-colors">
+             class="bg-orange-600 hover:bg-orange-700 text-white font-bold py-4 px-8 rounded-lg text-xl transition-colors" style="font-family: 'Google Sans Flex', sans-serif;">
             Buy for $7,500
           </a>
           <a href="/contact?subject=CMO%20BrandJSON"
-             class="bg-white hover:bg-orange-50 text-orange-600 font-bold py-4 px-8 rounded-lg text-xl border-2 border-orange-600 transition-colors">
-            Join as CMO
+             class="text-orange-600 font-bold py-4 px-8 rounded-lg text-xl transition-colors" style="font-family: 'Google Sans Flex', sans-serif; background: rgba(220, 38, 38, 0.2);">
+            Take 25% Stake as CMO
           </a>
         </div>
       </div>
     </div>
 
     <!-- Footer -->
-    <div class="max-w-7xl mx-auto px-8 pb-12">
+    <div class="max-w-3xl mx-auto px-8 pb-12">
       <div class="footer w-full flex flex-col gap-2">
-        <h1 class="font-bold text-2xl">wims.vc</h1>
+        <h1 class="font-bold text-2xl" style="font-family: 'Google Sans Flex', sans-serif;">wims.vc</h1>
+        <p class="font-sans text-base opacity-50 font-medium"><a href="https://x.com/clarklab">@clarklab</a> · <a href="https://x.com/angiedoes">@angiedoes</a></p>
       </div>
       <div class="footer w-full flex flex-col md:flex-row gap-4 font-sans text-base opacity-50 font-medium pt-4">
         <a href="/contact">Contact</a>
-        <a href="/privacy">Privacy Policy</a>
-        <a href="/terms">Terms of Service</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Service</a>
       </div>
     </div>
+
+    <script>
+      (function() {
+        const copyBtn = document.getElementById('copy-pitch');
+        const copyText = document.getElementById('copy-text');
+        const originalText = 'Copy Pitch Text';
+        const copiedText = 'Copied! Ask your AI';
+        let isCopying = false;
+
+        function typewriterEffect(element, oldText, newText, callback) {
+          let i = oldText.length;
+          const backspaceInterval = setInterval(() => {
+            if (i > 1) {
+              i--;
+              element.textContent = oldText.substring(0, i);
+            } else {
+              clearInterval(backspaceInterval);
+              let j = 1;
+              element.textContent = newText.substring(0, 1);
+              const typeInterval = setInterval(() => {
+                if (j < newText.length) {
+                  j++;
+                  element.textContent = newText.substring(0, j);
+                } else {
+                  clearInterval(typeInterval);
+                  if (callback) callback();
+                }
+              }, 30);
+            }
+          }, 25);
+        }
+
+        function getPageAsMarkdown() {
+          const name = document.querySelector('.sticky-sidebar h2').textContent;
+          const content = document.querySelector('.company-content');
+
+          let markdown = `# ${name}\n\n`;
+
+          content.querySelectorAll('h2, p, ul, div.features-grid, div.numbers-grid, div.job-card').forEach(el => {
+            if (el.tagName === 'H2') {
+              markdown += `## ${el.textContent}\n\n`;
+            } else if (el.tagName === 'P') {
+              markdown += `${el.textContent}\n\n`;
+            } else if (el.tagName === 'UL' && !el.closest('.numbers-column') && !el.closest('.vision-list')) {
+              el.querySelectorAll('li').forEach(li => {
+                markdown += `- ${li.textContent}\n`;
+              });
+              markdown += '\n';
+            } else if (el.classList.contains('vision-list')) {
+              el.querySelectorAll('li').forEach(li => {
+                markdown += `- ${li.textContent}\n`;
+              });
+              markdown += '\n';
+            } else if (el.classList.contains('features-grid')) {
+              el.querySelectorAll('.feature-card').forEach(card => {
+                const title = card.querySelector('.feature-title')?.textContent || '';
+                const desc = card.querySelector('.feature-desc')?.textContent || '';
+                markdown += `- **${title}**: ${desc}\n`;
+              });
+              markdown += '\n';
+            } else if (el.classList.contains('numbers-grid')) {
+              el.querySelectorAll('.numbers-column').forEach(col => {
+                const heading = col.querySelector('h3')?.textContent || '';
+                markdown += `### ${heading}\n`;
+                col.querySelectorAll('li').forEach(li => {
+                  markdown += `- ${li.textContent}\n`;
+                });
+                markdown += '\n';
+              });
+            } else if (el.classList.contains('job-card')) {
+              const title = el.querySelector('.job-title')?.textContent || '';
+              const desc = el.querySelector('.job-desc')?.textContent || '';
+              markdown += `**${title}**\n${desc}\n\n`;
+            }
+          });
+
+          return markdown.trim();
+        }
+
+        copyBtn.addEventListener('click', async () => {
+          if (isCopying) return;
+          isCopying = true;
+
+          const markdown = getPageAsMarkdown();
+
+          try {
+            await navigator.clipboard.writeText(markdown);
+            typewriterEffect(copyText, originalText, copiedText, () => {
+              setTimeout(() => {
+                copyText.textContent = originalText;
+                isCopying = false;
+              }, 5000);
+            });
+          } catch (err) {
+            console.error('Failed to copy:', err);
+            isCopying = false;
+          }
+        });
+      })();
+    </script>
   </body>
 </html>

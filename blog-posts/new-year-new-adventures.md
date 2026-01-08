@@ -1,6 +1,6 @@
 Title: New Year, New Adventures
 Author: Clark Wimberly
-Posted: Wed, Jan 8, 2025
+Posted: Wed, Jan 8, 2026
 
 AI changed the math. What used to take a team and six months now takes a weekend and a good prompt. Building is the easy part now.
 
