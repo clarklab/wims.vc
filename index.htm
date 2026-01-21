@@ -23,15 +23,24 @@
         navigation: auto;
       }
 
-      /* Fast, subtle page crossfade */
+      /* Root page: simple fade only, no position/scale animation */
+      ::view-transition-group(root) {
+        animation-duration: 0.2s;
+      }
       ::view-transition-old(root),
       ::view-transition-new(root) {
-        animation-duration: 0.15s;
+        animation: fade 0.2s ease-in-out;
+        mix-blend-mode: normal;
       }
 
-      /* Smooth tile morph animation */
+      /* Tiles: smooth morph animation with position + scale */
       ::view-transition-group(*):not(::view-transition-group(root)) {
-        animation-duration: 0.4s;
+        animation-duration: 0.35s;
+      }
+
+      @keyframes fade {
+        from { opacity: 1; }
+        to { opacity: 0; }
       }
     </style>
   </head>
@@ -96,6 +105,7 @@
                     Apply
                 </a>
             </div>
+        </div>
         </div>
         </div>
         </div>
