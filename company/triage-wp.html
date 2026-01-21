@@ -11,9 +11,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@100..900&display=swap" rel="stylesheet">
     <title>Triage WP - wims.vc</title>
-    <meta name="description" content="coming">
+    <meta name="description" content="Sort and clean old WordPress content with ease">
     <meta property="og:title" content="Triage WP - wims.vc">
-    <meta property="og:description" content="coming">
+    <meta property="og:description" content="Sort and clean old WordPress content with ease">
     <meta property="og:image" content="/companies/tile-triage-wp.png">
     <meta property="og:url" content="https://wims.vc/company/triage-wp">
     <meta property="og:type" content="website">
@@ -390,6 +390,44 @@
         0% { width: 8px; height: 8px; opacity: 1; }
         100% { width: 24px; height: 24px; opacity: 0; }
       }
+      /* Numbers locked overlay */
+      .numbers-locked {
+        position: relative;
+      }
+      .numbers-locked .numbers-content {
+        filter: blur(4px);
+        user-select: none;
+        pointer-events: none;
+      }
+      .numbers-locked .numbers-overlay {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        background: rgba(253, 250, 246, 0.7);
+        border-radius: 0.75rem;
+      }
+      .numbers-locked .lock-icon {
+        width: 2rem;
+        height: 2rem;
+        color: #ea580c;
+      }
+      .numbers-locked .lock-message {
+        font-family: 'Google Sans Flex', sans-serif;
+        font-size: 1rem;
+        font-weight: 500;
+        color: rgba(67, 20, 7, 0.8);
+      }
+      .numbers-locked .lock-button {
+        font-family: 'Google Sans Flex', sans-serif;
+        font-size: 0.875rem;
+        font-weight: 700;
+        color: #dc2626;
+        text-decoration: underline;
+      }
     </style>
   </head>
   <body class="bg-orange-50/60 text-orange-950">
@@ -415,10 +453,7 @@
             <img src="/companies/tile-triage-wp.png" alt="Triage WP" style="view-transition-name: tile-triage-wp">
           </div>
           <div class="carousel-slide">
-            <img src="/companies/slide-triage-2.webp" alt="Triage WP">
-          </div>
-          <div class="carousel-slide">
-            <img src="/companies/slide-triage-3.webp" alt="Triage WP">
+            <img src="/companies/slide-triage-wp-1.png" alt="Triage WP">
           </div>
         </div>
       </div>
@@ -552,7 +587,7 @@
           <div class="sticky-sidebar flex flex-col gap-6 text-lg">
             <div>
               <h2 class="font-bold text-3xl mb-1" style="font-family: 'Google Sans Flex', sans-serif;">Triage WP</h2>
-                          </div>
+                        </div>
 
             <div class="grid grid-cols-2 md:grid-cols-1 gap-4">
               <div class="flex flex-col gap-1">
@@ -596,12 +631,10 @@
 <p class="elevator-pitch">The easiest way to sort, grade, and remove or keep old WordPress content, powered by real data and a human eye.</p>
 
 <h2 data-icon="visibility">The Vision</h2>
-<p>Most startups and large companies have a legacy WordPress website with years worth of old content. People don't care, but bots and agents hate it. It's time to clean that up.</p>
-
+<p>Most startups and large companies have a legacy WordPress website with years worth of old content. People don&#39;t care, but bots and agents hate it. It&#39;s time to clean that up.</p>
 <h2 data-icon="lightbulb">The Opportunity</h2>
-<p>Help teams quickly sort hundreds or THOUSANDS of WP content pages with a quick yes/no interface, something that used to take meetings and dreaded spreadsheets. I'd pay out of pocket to avoid that, and now we know others will too.</p>
-
-<h2 data-icon="circle">What's Already Built</h2>
+<p>Help teams quickly sort hundreds or THOUSANDS of WP content pages with a quick yes/no interface, something that used to take meetings and dreaded spreadsheets. I&#39;d pay out of pocket to avoid that, and now we know others will too.</p>
+<h2 data-icon="circle">What&#39;s Already Built</h2>
 <div class="features-grid">
 <div class="feature-card">
 <div class="feature-header">
@@ -633,39 +666,7 @@
 </div>
 </div>
 
-<h2 data-icon="circle">The Numbers</h2>
-<div class="numbers-locked">
-<div class="numbers-content">
-<div class="numbers-grid">
-<div class="numbers-column">
-<h3>XXXX XXXXXXX</h3>
-<ul>
-<li>$X,XXX/xx lorem</li>
-<li>XXX ipsum dolor</li>
-<li>XX% sit amet cons</li>
-<li>$X.XX adipiscing</li>
-</ul>
-</div>
-<div class="numbers-column">
-<h3>XXXXXXXXXX</h3>
-<ul>
-<li>$XX,XXX/xx by XX</li>
-<li>X.Xk elit target</li>
-<li>XX% sed do margin</li>
-<li>Eiusmod in Xmo</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="numbers-overlay">
-<svg class="lock-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-<path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
-</svg>
-<span class="lock-message">Get in touch to talk numbers</span>
-<a href="/contact" class="lock-button">Contact wims.vc</a>
-</div>
-</div>
-
+<h2 data-icon="circle">Currently Seeking</h2>
 <h2 data-icon="circle" class="flex items-center gap-3">Currently Seeking <span class="job-nav ml-auto flex gap-1"><button class="job-prev"><span class="material-symbols-outlined">chevron_left</span></button><button class="job-next"><span class="material-symbols-outlined">chevron_right</span></button></span></h2>
 <div class="job-carousel">
 <div class="job-carousel-track">
@@ -704,11 +705,11 @@
     </div>
 
 
-    <!-- Company Tiles Section -->
-    <div class="max-w-3xl mx-auto px-8 pb-12">
-      <div class="w-full flex flex-col gap-4">
-        <h2 class="font-medium text-sm uppercase tracking-wide mb-2" style="font-family: 'Google Sans Flex', sans-serif;">WVC 26 <span class="opacity-50">Our Apps</span></h2>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+    <!--           <div class="company">
+            <a href="/company/brandjson.html">
+              <img class="aspect-video object-cover rounded-lg" src="/companies/tile-brandjson.png" alt="BrandJSON" style="view-transition-name: tile-brandjson">
+            </a>
+          </div>
           <div class="company">
             <a href="/company/peel-diy.html">
               <img class="aspect-video object-cover rounded-lg" src="/companies/tile-peel.png" alt="Peel" style="view-transition-name: tile-peel-diy">
@@ -720,13 +721,8 @@
             </a>
           </div>
           <div class="company">
-            <a href="/company/brandjson.html">
-              <img class="aspect-video object-cover rounded-lg" src="/companies/tile-brandjson.png" alt="BrandJSON" style="view-transition-name: tile-brandjson">
-            </a>
-          </div>
-          <div class="company">
-            <a href="/company/rotato.html" class="tile-white">
-              <img class="aspect-video object-cover rounded-lg" src="/companies/tile-rotato-white.png" alt="Rotato" style="view-transition-name: tile-rotato">
+            <a href="/company/publicpickleballcourts.html">
+              <img class="aspect-video object-cover rounded-lg" src="/companies/tile-publicpickleballcourts.png" alt="Public Pickleball Courts" style="view-transition-name: tile-publicpickleballcourts">
             </a>
           </div>
           <div class="company">
@@ -735,13 +731,57 @@
             </a>
           </div>
           <div class="company">
+            <a href="/company/rotato.html">
+              <img class="aspect-video object-cover rounded-lg" src="/companies/tile-rotato-white.png" alt="Rotato" style="view-transition-name: tile-rotato">
+            </a>
+          </div>
+          <div class="company">
             <a href="/company/vibe-tell.html">
               <img class="aspect-video object-cover rounded-lg" src="/companies/tile-vibe-tell.png" alt="Vibe&Tell" style="view-transition-name: tile-vibe-tell">
             </a>
           </div>
           <div class="company">
+            <a href="/apply" class="aspect-video rounded-lg bg-red-500/20 hover:bg-red-500/30 transition-colors flex items-center justify-center text-red-600 font-bold text-xl" style="font-family: 'Google Sans Flex', sans-serif;">
+              Apply
+            </a>
+          </div> Section -->
+    <div class="max-w-3xl mx-auto px-8 pb-12">
+      <div class="w-full flex flex-col gap-4">
+        <h2 class="font-medium text-sm uppercase tracking-wide mb-2" style="font-family: 'Google Sans Flex', sans-serif;">WVC 26 <span class="opacity-50">Our Apps</span></h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                    <div class="company">
+            <a href="/company/brandjson.html">
+              <img class="aspect-video object-cover rounded-lg" src="/companies/tile-brandjson.png" alt="BrandJSON" style="view-transition-name: tile-brandjson">
+            </a>
+          </div>
+          <div class="company">
+            <a href="/company/peel-diy.html">
+              <img class="aspect-video object-cover rounded-lg" src="/companies/tile-peel.png" alt="Peel" style="view-transition-name: tile-peel-diy">
+            </a>
+          </div>
+          <div class="company">
+            <a href="/company/staticdam.html">
+              <img class="aspect-video object-cover rounded-lg" src="/companies/tile-staticdam.png" alt="StaticDAM" style="view-transition-name: tile-staticdam">
+            </a>
+          </div>
+          <div class="company">
             <a href="/company/publicpickleballcourts.html">
               <img class="aspect-video object-cover rounded-lg" src="/companies/tile-publicpickleballcourts.png" alt="Public Pickleball Courts" style="view-transition-name: tile-publicpickleballcourts">
+            </a>
+          </div>
+          <div class="company">
+            <a href="/company/checkins.html">
+              <img class="aspect-video object-cover rounded-lg" src="/companies/tile-checkins.png" alt="Checkins" style="view-transition-name: tile-checkins">
+            </a>
+          </div>
+          <div class="company">
+            <a href="/company/rotato.html">
+              <img class="aspect-video object-cover rounded-lg" src="/companies/tile-rotato-white.png" alt="Rotato" style="view-transition-name: tile-rotato">
+            </a>
+          </div>
+          <div class="company">
+            <a href="/company/vibe-tell.html">
+              <img class="aspect-video object-cover rounded-lg" src="/companies/tile-vibe-tell.png" alt="Vibe&Tell" style="view-transition-name: tile-vibe-tell">
             </a>
           </div>
           <div class="company">

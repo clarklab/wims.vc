@@ -1,24 +1,24 @@
-Name: Peel
-URL: https://peel.diy/
-Thumbnail: /companies/tile-peel.png
+Name: Checkins
+URL: https://checkins.party/
+Thumbnail: /companies/tile-checkins.png
 Status: Live
-Payments: Enabled
+Payments: Sales
 Backend: Built
-Business Model: Token Arbitrage
-Price: $12,500
-Description: AI image generation platform
+Business Model: Event Services
+Description: Event engagement passport for party hosts and organizers
+Price: $72,000
 
 ## The Elevator Pitch
 
-<p class="elevator-pitch">Peel is the easiest way for people and brands to make and edit images with AI using Google's latest image model, Nano Banana Pro.</p>
+<p class="elevator-pitch">The simplest way for party hosts and event organizers to make a fun and engaging "checkin" passport to drive engagement, during and after the event.</p>
 
 ## The Vision
 
-Allow anyone to quickly access the cutting edge AI model, with no API keys or complicated setup. It's also a powerful work tool, with custom batch and preset options that makes it a better option than even the native AI Studio editor.
+A modern take on the scavenger hunt or social checklist. Attendees can interact with schedules, booths, themes, people—all with no apps to install and real ROI.
 
 ## The Opportunity
 
-Most AI gateways, or direct AI API access, provides tokens at cost. Most end-user AI setup is complex. We can make that easy, and sell tokens at a slight premium, with our easier-to-use app bringing value that keeps people buying tokens.
+Events have huge budgets. And those budgets are supposed to produce: sign-ups, social shares, and follow-ups. We've got all that covered, plus the ability to hand out swag, drive geolocated traffic, and more.
 
 ## What's Already Built
 
@@ -28,51 +28,28 @@ Most AI gateways, or direct AI API access, provides tokens at cost. Most end-use
 <span class="feature-icon">language</span>
 <span class="feature-title">Marketing Site</span>
 </div>
-<span class="feature-desc">Complete site with landing pages and documentation</span>
+<span class="feature-desc">Landing page and event organizer info</span>
 </div>
 <div class="feature-card">
 <div class="feature-header">
-<span class="feature-icon">apps</span>
+<span class="feature-icon">phone_iphone</span>
 <span class="feature-title">Working App</span>
 </div>
-<span class="feature-desc">Users can sign up today and make images now</span>
+<span class="feature-desc">Full checkin passport system ready to deploy</span>
 </div>
 <div class="feature-card">
 <div class="feature-header">
-<span class="feature-icon">payments</span>
-<span class="feature-title">Payments</span>
+<span class="feature-icon">groups</span>
+<span class="feature-title">User Testing</span>
 </div>
-<span class="feature-desc">Selling tokens with Polar and tracking with Supabase</span>
+<span class="feature-desc">Real watch party with dozens of users</span>
 </div>
 <div class="feature-card">
 <div class="feature-header">
 <span class="feature-icon">palette</span>
-<span class="feature-title">Brand</span>
+<span class="feature-title">Branding</span>
 </div>
-<span class="feature-desc">Premium domain (peel.diy) and branding system</span>
-</div>
-</div>
-
-## The Numbers
-
-<div class="numbers-grid">
-<div class="numbers-column">
-<h3>250 Monthly Users</h3>
-<ul>
-<li>$2,750/mo revenue (30% markup)</li>
-<li>$825/mo profit</li>
-<li>Work and SaaS sales ready</li>
-<li><a href="/contact" class="underline decoration-red-500">Can you do better?</a></li>
-</ul>
-</div>
-<div class="numbers-column">
-<h3>1k Monthly Users</h3>
-<ul>
-<li>$11,000/mo revenue (30% markup)</li>
-<li>$3,300/mo profit</li>
-<li>Work and SaaS sales ready</li>
-<li><a href="/contact" class="underline decoration-red-500">Can you do better?</a></li>
-</ul>
+<span class="feature-desc">Domain name and visual identity locked in</span>
 </div>
 </div>
 
@@ -89,7 +66,7 @@ Most AI gateways, or direct AI API access, provides tokens at cost. Most end-use
 <div class="job-card">
 <div class="job-title">Buyer</div>
 <div class="job-desc">Acquire this business outright. Working product, established brand, and immediate revenue potential. Perfect for an entrepreneur looking to skip the build phase and go straight to growth.</div>
-<a href="/contact" class="inline-block mt-4 bg-white text-red-600 font-bold py-2 px-6 rounded-lg text-base transition-colors hover:bg-gray-100" style="font-family: 'Google Sans Flex', sans-serif;">Buy for $12,500</a>
+<a href="/contact" class="inline-block mt-4 bg-white text-red-600 font-bold py-2 px-6 rounded-lg text-base transition-colors hover:bg-gray-100" style="font-family: 'Google Sans Flex', sans-serif;">Buy for $72,000</a>
 </div>
 <div class="job-card">
 <div class="job-title">Intern</div>

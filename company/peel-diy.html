@@ -57,42 +57,13 @@
         flex: 0 0 100%;
         min-width: 0;
       }
-      .carousel-slide img,
-      .carousel-slide video {
+      .carousel-slide img {
         width: 100%;
         aspect-ratio: 16/9;
         object-fit: cover;
         border-radius: 0.5rem;
         pointer-events: none;
         user-select: none;
-      }
-      .carousel-slide {
-        position: relative;
-      }
-      .carousel-slide .mute-btn {
-        position: absolute;
-        bottom: 1rem;
-        right: 1rem;
-        width: 2.5rem;
-        height: 2.5rem;
-        border-radius: 50%;
-        background: rgba(0, 0, 0, 0.6);
-        border: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        pointer-events: auto;
-        transition: background 0.2s;
-        z-index: 10;
-      }
-      .carousel-slide .mute-btn:hover {
-        background: rgba(0, 0, 0, 0.8);
-      }
-      .carousel-slide .mute-btn svg {
-        width: 1.25rem;
-        height: 1.25rem;
-        fill: white;
       }
       .carousel-dots {
         display: flex;
@@ -161,7 +132,7 @@
         border-left: 3px solid #f97316;
       }
       .company-content ul li::before {
-        content: '→';
+        content: '\2192';
         position: absolute;
         left: 1rem;
         color: #f97316;
@@ -194,7 +165,7 @@
         border-radius: 0;
       }
       .vision-list li::before {
-        content: '•';
+        content: '\2022';
         position: absolute;
         left: 0;
         color: #ea580c;
@@ -419,6 +390,44 @@
         0% { width: 8px; height: 8px; opacity: 1; }
         100% { width: 24px; height: 24px; opacity: 0; }
       }
+      /* Numbers locked overlay */
+      .numbers-locked {
+        position: relative;
+      }
+      .numbers-locked .numbers-content {
+        filter: blur(4px);
+        user-select: none;
+        pointer-events: none;
+      }
+      .numbers-locked .numbers-overlay {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        background: rgba(253, 250, 246, 0.7);
+        border-radius: 0.75rem;
+      }
+      .numbers-locked .lock-icon {
+        width: 2rem;
+        height: 2rem;
+        color: #ea580c;
+      }
+      .numbers-locked .lock-message {
+        font-family: 'Google Sans Flex', sans-serif;
+        font-size: 1rem;
+        font-weight: 500;
+        color: rgba(67, 20, 7, 0.8);
+      }
+      .numbers-locked .lock-button {
+        font-family: 'Google Sans Flex', sans-serif;
+        font-size: 0.875rem;
+        font-weight: 700;
+        color: #dc2626;
+        text-decoration: underline;
+      }
     </style>
   </head>
   <body class="bg-orange-50/60 text-orange-950">
@@ -443,15 +452,8 @@
           <div class="carousel-slide">
             <img src="/companies/tile-peel.png" alt="Peel" style="view-transition-name: tile-peel-diy">
           </div>
-          <div class="carousel-slide" data-video>
-            <video src="/companies/slide-peel-2.mp4" muted playsinline></video>
-            <button class="mute-btn" aria-label="Toggle mute">
-              <svg class="icon-muted" viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
-              <svg class="icon-unmuted" style="display:none" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
-            </button>
-          </div>
           <div class="carousel-slide">
-            <img src="/companies/slide-peel-3.png" alt="Peel">
+            <img src="/companies/slide-peel-1.png" alt="Peel">
           </div>
         </div>
       </div>
@@ -470,8 +472,7 @@
         let currentX = 0;
         let isDragging = false;
         let startTranslate = 0;
-        let autoAdvanceTimeout = null;
-        let isMuted = true;
+        let autoAdvanceInterval = null;
 
         // Create dots
         slides.forEach((_, i) => {
@@ -482,21 +483,6 @@
             goToSlide(i);
           });
           dotsContainer.appendChild(dot);
-        });
-
-        // Setup mute buttons
-        document.querySelectorAll('.mute-btn').forEach(btn => {
-          btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            isMuted = !isMuted;
-            document.querySelectorAll('.carousel-slide video').forEach(v => {
-              v.muted = isMuted;
-            });
-            document.querySelectorAll('.mute-btn').forEach(b => {
-              b.querySelector('.icon-muted').style.display = isMuted ? 'block' : 'none';
-              b.querySelector('.icon-unmuted').style.display = isMuted ? 'none' : 'block';
-            });
-          });
         });
 
         function updateDots() {
@@ -514,64 +500,27 @@
           carousel.style.transform = `translateX(${percent}%)`;
         }
 
-        function handleSlideChange() {
-          // Pause all videos
-          slides.forEach((slide, i) => {
-            const video = slide.querySelector('video');
-            if (video) {
-              if (i === currentIndex) {
-                video.currentTime = 0;
-                video.play().catch(() => {});
-              } else {
-                video.pause();
-              }
-            }
-          });
-
-          // Schedule next auto-advance
-          scheduleAutoAdvance();
-        }
-
-        function scheduleAutoAdvance() {
-          stopAutoAdvance();
-          const currentSlide = slides[currentIndex];
-          const video = currentSlide.querySelector('video');
-
-          if (video) {
-            // For video slides, advance when video ends
-            video.onended = () => {
-              goToSlide(currentIndex + 1);
-            };
-          } else {
-            // For image slides, use 6 second timeout
-            autoAdvanceTimeout = setTimeout(() => {
-              goToSlide(currentIndex + 1);
-            }, 6000);
-          }
-        }
-
         function goToSlide(index, smooth = true) {
           currentIndex = ((index % slideCount) + slideCount) % slideCount;
           setTransform(getTranslateX(), smooth);
           updateDots();
-          handleSlideChange();
+        }
+
+        function startAutoAdvance() {
+          if (autoAdvanceInterval) return;
+          autoAdvanceInterval = setInterval(() => {
+            goToSlide(currentIndex + 1);
+          }, 6000);
         }
 
         function stopAutoAdvance() {
-          if (autoAdvanceTimeout) {
-            clearTimeout(autoAdvanceTimeout);
-            autoAdvanceTimeout = null;
+          if (autoAdvanceInterval) {
+            clearInterval(autoAdvanceInterval);
+            autoAdvanceInterval = null;
           }
-          // Clear video onended handlers
-          slides.forEach(slide => {
-            const video = slide.querySelector('video');
-            if (video) video.onended = null;
-          });
         }
 
         function handleDragStart(e) {
-          // Don't start drag on mute button
-          if (e.target.closest('.mute-btn')) return;
           stopAutoAdvance();
           isDragging = true;
           carousel.classList.add('dragging');
@@ -625,7 +574,7 @@
 
         // Initialize
         setTransform(0, false);
-        scheduleAutoAdvance();
+        startAutoAdvance();
       })();
     </script>
 
@@ -638,7 +587,7 @@
           <div class="sticky-sidebar flex flex-col gap-6 text-lg">
             <div>
               <h2 class="font-bold text-3xl mb-1" style="font-family: 'Google Sans Flex', sans-serif;">Peel</h2>
-                          </div>
+                        </div>
 
             <div class="grid grid-cols-2 md:grid-cols-1 gap-4">
               <div class="flex flex-col gap-1">
@@ -718,38 +667,28 @@
 </div>
 
 <h2 data-icon="circle">The Numbers</h2>
-<div class="numbers-locked">
-<div class="numbers-content">
 <div class="numbers-grid">
 <div class="numbers-column">
-<h3>XXXX XXXXXXX</h3>
+<h3>250 Monthly Users</h3>
 <ul>
-<li>$X,XXX/xx lorem</li>
-<li>XXX ipsum dolor</li>
-<li>XX% sit amet cons</li>
-<li>$X.XX adipiscing</li>
+<li>$2,750/mo revenue (30% markup)</li>
+<li>$825/mo profit</li>
+<li>Work and SaaS sales ready</li>
+<li><a href="/contact" class="underline decoration-red-500">Can you do better?</a></li>
 </ul>
 </div>
 <div class="numbers-column">
-<h3>XXXXXXXXXX</h3>
+<h3>1k Monthly Users</h3>
 <ul>
-<li>$XX,XXX/xx by XX</li>
-<li>X.Xk elit target</li>
-<li>XX% sed do margin</li>
-<li>Eiusmod in Xmo</li>
+<li>$11,000/mo revenue (30% markup)</li>
+<li>$3,300/mo profit</li>
+<li>Work and SaaS sales ready</li>
+<li><a href="/contact" class="underline decoration-red-500">Can you do better?</a></li>
 </ul>
-</div>
-</div>
-</div>
-<div class="numbers-overlay">
-<svg class="lock-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-<path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
-</svg>
-<span class="lock-message">Get in touch to talk numbers</span>
-<a href="/contact" class="lock-button">Contact wims.vc</a>
 </div>
 </div>
 
+<h2 data-icon="circle">Currently Seeking</h2>
 <h2 data-icon="circle" class="flex items-center gap-3">Currently Seeking <span class="job-nav ml-auto flex gap-1"><button class="job-prev"><span class="material-symbols-outlined">chevron_left</span></button><button class="job-next"><span class="material-symbols-outlined">chevron_right</span></button></span></h2>
 <div class="job-carousel">
 <div class="job-carousel-track">
@@ -761,7 +700,7 @@
 <div class="job-card">
 <div class="job-title">Buyer</div>
 <div class="job-desc">Acquire this business outright. Working product, established brand, and immediate revenue potential. Perfect for an entrepreneur looking to skip the build phase and go straight to growth.</div>
-<a href="/contact" class="inline-block mt-4 bg-white text-red-600 font-bold py-2 px-6 rounded-lg text-base transition-colors hover:bg-gray-100" style="font-family: 'Google Sans Flex', sans-serif;">Buy for $64,000</a>
+<a href="/contact" class="inline-block mt-4 bg-white text-red-600 font-bold py-2 px-6 rounded-lg text-base transition-colors hover:bg-gray-100" style="font-family: 'Google Sans Flex', sans-serif;">Buy for $12,500</a>
 </div>
 <div class="job-card">
 <div class="job-title">Intern</div>
@@ -804,32 +743,13 @@
             </a>
           </div>
           <div class="company">
-            <a href="/apply" class="aspect-video rounded-lg bg-red-500/20 hover:bg-red-500/30 transition-colors flex items-center justify-center text-red-600 font-bold text-xl" style="font-family: 'Google Sans Flex', sans-serif;">
-              Apply
-            </a>
-          </div> Section -->
-    <div class="max-w-3xl mx-auto px-8 pb-12">
-      <div class="w-full flex flex-col gap-4">
-        <h2 class="font-medium text-sm uppercase tracking-wide mb-2" style="font-family: 'Google Sans Flex', sans-serif;">WVC 26 <span class="opacity-50">Our Apps</span></h2>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
-          <div class="company">
-            <a href="/company/staticdam.html">
-              <img class="aspect-video object-cover rounded-lg" src="/companies/tile-staticdam.png" alt="StaticDAM" style="view-transition-name: tile-staticdam">
-            </a>
-          </div>
-          <div class="company">
-            <a href="/company/brandjson.html">
-              <img class="aspect-video object-cover rounded-lg" src="/companies/tile-brandjson.png" alt="BrandJSON" style="view-transition-name: tile-brandjson">
-            </a>
-          </div>
-          <div class="company">
-            <a href="/company/rotato.html" class="tile-white">
-              <img class="aspect-video object-cover rounded-lg" src="/companies/tile-rotato-white.png" alt="Rotato" style="view-transition-name: tile-rotato">
-            </a>
-          </div>
-          <div class="company">
             <a href="/company/checkins.html">
               <img class="aspect-video object-cover rounded-lg" src="/companies/tile-checkins.png" alt="Checkins" style="view-transition-name: tile-checkins">
+            </a>
+          </div>
+          <div class="company">
+            <a href="/company/rotato.html">
+              <img class="aspect-video object-cover rounded-lg" src="/companies/tile-rotato-white.png" alt="Rotato" style="view-transition-name: tile-rotato">
             </a>
           </div>
           <div class="company">
@@ -843,8 +763,47 @@
             </a>
           </div>
           <div class="company">
+            <a href="/apply" class="aspect-video rounded-lg bg-red-500/20 hover:bg-red-500/30 transition-colors flex items-center justify-center text-red-600 font-bold text-xl" style="font-family: 'Google Sans Flex', sans-serif;">
+              Apply
+            </a>
+          </div> Section -->
+    <div class="max-w-3xl mx-auto px-8 pb-12">
+      <div class="w-full flex flex-col gap-4">
+        <h2 class="font-medium text-sm uppercase tracking-wide mb-2" style="font-family: 'Google Sans Flex', sans-serif;">WVC 26 <span class="opacity-50">Our Apps</span></h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                    <div class="company">
+            <a href="/company/brandjson.html">
+              <img class="aspect-video object-cover rounded-lg" src="/companies/tile-brandjson.png" alt="BrandJSON" style="view-transition-name: tile-brandjson">
+            </a>
+          </div>
+          <div class="company">
+            <a href="/company/staticdam.html">
+              <img class="aspect-video object-cover rounded-lg" src="/companies/tile-staticdam.png" alt="StaticDAM" style="view-transition-name: tile-staticdam">
+            </a>
+          </div>
+          <div class="company">
             <a href="/company/publicpickleballcourts.html">
               <img class="aspect-video object-cover rounded-lg" src="/companies/tile-publicpickleballcourts.png" alt="Public Pickleball Courts" style="view-transition-name: tile-publicpickleballcourts">
+            </a>
+          </div>
+          <div class="company">
+            <a href="/company/checkins.html">
+              <img class="aspect-video object-cover rounded-lg" src="/companies/tile-checkins.png" alt="Checkins" style="view-transition-name: tile-checkins">
+            </a>
+          </div>
+          <div class="company">
+            <a href="/company/rotato.html">
+              <img class="aspect-video object-cover rounded-lg" src="/companies/tile-rotato-white.png" alt="Rotato" style="view-transition-name: tile-rotato">
+            </a>
+          </div>
+          <div class="company">
+            <a href="/company/triage-wp.html">
+              <img class="aspect-video object-cover rounded-lg" src="/companies/tile-triage-wp.png" alt="Triage WP" style="view-transition-name: tile-triage-wp">
+            </a>
+          </div>
+          <div class="company">
+            <a href="/company/vibe-tell.html">
+              <img class="aspect-video object-cover rounded-lg" src="/companies/tile-vibe-tell.png" alt="Vibe&Tell" style="view-transition-name: tile-vibe-tell">
             </a>
           </div>
           <div class="company">

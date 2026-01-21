@@ -278,9 +278,9 @@ function buildCompany(mdFile) {
     const domainLink = `<a href="${url}" target="_blank">${domain}</a>`;
     finalHtml = finalHtml.replace(/Company Domain Link/g, domainLink);
 
-    // Replace Company Status (add red dot if Live)
+    // Replace Company Status (add live beacon animation if Live)
     const statusDisplay = status === 'Live'
-      ? '<span style="display:inline-block;width:8px;height:8px;background:#dc2626;border-radius:50%;margin-right:6px;"></span>Live'
+      ? '<span class="live-beacon"></span>Live'
       : status;
     finalHtml = finalHtml.replace(/Company Status/g, statusDisplay);
 
