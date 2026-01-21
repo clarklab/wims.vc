@@ -112,7 +112,6 @@ function updateIndex() {
       const color = colors[index % colors.length];
       return `            <li>
                 <a href="/blog/${post.htmlFile}" class="underline decoration-4 decoration-${color}">${post.title}</a>
-                <span class="text-sm opacity-70"> · ${post.posted}</span>
             </li>`;
     }).join('\n');
     
@@ -169,7 +168,7 @@ function getAllCompanies() {
   }).filter(company => company !== null);
 
   // Custom sort order for companies
-  const sortOrder = ['brandjson', 'peel-diy', 'staticdam', 'publicpickleballcourts'];
+  const sortOrder = ['peel-diy', 'staticdam', 'brandjson', 'rotato', 'checkins', 'triage-wp', 'vibe-tell', 'publicpickleballcourts'];
   companies.sort((a, b) => {
     const aIndex = sortOrder.indexOf(a.slug);
     const bIndex = sortOrder.indexOf(b.slug);
@@ -264,10 +263,39 @@ function buildCompany(mdFile) {
     // Replace Company Thumbnail
     finalHtml = finalHtml.replace(/Company Thumbnail/g, thumbnail);
 
-    // Replace Company Slide 1 (second carousel image)
-    const slideSlug = slug === 'peel-diy' ? 'peel' : slug;
-    const slide1Path = `/companies/slide-${slideSlug}-1.png`;
-    finalHtml = finalHtml.replace(/Company Slide 1/g, slide1Path);
+    // Generate carousel slides HTML from Slides metadata
+    const slidesStr = metadata.slides || '';
+    const slideFiles = slidesStr ? slidesStr.split(',').map(s => s.trim()) : [];
+
+    // Build carousel slides HTML - always start with thumbnail
+    const thumbnailWhiteClass = thumbnail.includes('-white') ? ' class="white-bg"' : '';
+    let carouselSlidesHtml = `          <div class="carousel-slide">
+            <img src="${thumbnail}" alt="${name}"${thumbnailWhiteClass} style="view-transition-name: ${`tile-${slug}`}">
+          </div>`;
+
+    // Add additional slides
+    slideFiles.forEach(slideFile => {
+      const isVideo = slideFile.endsWith('.mp4') || slideFile.endsWith('.webm');
+      const isWhite = slideFile.includes('-white');
+      const whiteClass = isWhite ? ' white-bg' : '';
+      if (isVideo) {
+        carouselSlidesHtml += `
+          <div class="carousel-slide video-slide" data-video="true">
+            <video src="/companies/${slideFile}" muted playsinline preload="metadata" class="carousel-video${whiteClass}"></video>
+            <button class="video-unmute-btn" aria-label="Unmute video">
+              <span class="material-symbols-outlined">volume_off</span>
+            </button>
+          </div>`;
+      } else {
+        carouselSlidesHtml += `
+          <div class="carousel-slide">
+            <img src="/companies/${slideFile}" alt="${name}"${isWhite ? ' class="white-bg"' : ''}>
+          </div>`;
+      }
+    });
+
+    // Replace the carousel placeholder in template
+    finalHtml = finalHtml.replace(/<!-- CAROUSEL_SLIDES -->/g, carouselSlidesHtml);
 
     // Replace Company URL
     finalHtml = finalHtml.replace(/Company URL/g, url);
@@ -314,9 +342,11 @@ function buildCompany(mdFile) {
     const otherCompanies = allCompanies.filter(company => company.slug !== slug);
 
     let companyTilesHtml = otherCompanies.map(company => {
+      const isWhite = company.thumbnail.includes('-white');
+      const borderStyle = isWhite ? ' border-2 border-orange-950/15' : '';
       return `          <div class="company">
             <a href="/company/${company.htmlFile}">
-              <img class="aspect-video object-cover rounded-lg" src="${company.thumbnail}" alt="${company.name}" style="view-transition-name: tile-${company.slug}">
+              <img class="aspect-video object-cover rounded-lg${borderStyle}" src="${company.thumbnail}" alt="${company.name}" style="view-transition-name: tile-${company.slug}">
             </a>
           </div>`;
     }).join('\n');
@@ -379,9 +409,11 @@ function updateIndexWithCompanies() {
 
     // Generate company grid HTML
     const companyGridHTML = companies.map(company => {
+      const isWhite = company.thumbnail.includes('-white');
+      const borderStyle = isWhite ? ' border-2 border-orange-950/15' : '';
       return `            <div class="company">
                 <a href="/company/${company.slug}.html">
-                    <img class="aspect-video object-cover rounded-lg" src="${company.thumbnail}" alt="${company.name}" style="view-transition-name: tile-${company.slug}">
+                    <img class="aspect-video object-cover rounded-lg${borderStyle}" src="${company.thumbnail}" alt="${company.name}" style="view-transition-name: tile-${company.slug}">
                 </a>
             </div>`;
     }).join('\n');

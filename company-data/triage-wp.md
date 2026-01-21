@@ -1,6 +1,7 @@
 Name: Triage WP
 URL: https://triagewp.com/
 Thumbnail: /companies/tile-triage-wp.png
+Slides: slide-triage-2.webp, slide-triage-3.webp
 Status: Live
 Payments: Enabled
 Backend: Built
@@ -53,7 +54,41 @@ Help teams quickly sort hundreds or THOUSANDS of WP content pages with a quick y
 </div>
 </div>
 
-## Currently Seeking
+## The Numbers
+
+<div class="numbers-locked">
+<div class="numbers-content">
+<div class="numbers-grid">
+<div class="numbers-column">
+<h3>XXXX XXXXXXX</h3>
+<ul>
+<li>$X,XXX/xx lorem</li>
+<li>XXX ipsum dolor</li>
+<li>XX% sit amet cons</li>
+<li>$X.XX adipiscing</li>
+</ul>
+</div>
+<div class="numbers-column">
+<h3>XXXXXXXXXX</h3>
+<ul>
+<li>$XX,XXX/xx by XX</li>
+<li>X.Xk elit target</li>
+<li>XX% sed do margin</li>
+<li>Eiusmod in Xmo</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="numbers-overlay">
+<svg class="lock-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+</svg>
+<span class="lock-message">Get in touch to talk numbers</span>
+<a href="/contact" class="lock-button">Contact wims.vc</a>
+</div>
+</div>
+
+
 
 <h2 data-icon="circle" class="flex items-center gap-3">Currently Seeking <span class="job-nav ml-auto flex gap-1"><button class="job-prev"><span class="material-symbols-outlined">chevron_left</span></button><button class="job-next"><span class="material-symbols-outlined">chevron_right</span></button></span></h2>
 <div class="job-carousel">

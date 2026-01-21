@@ -17,6 +17,11 @@ font-style: normal;
     text-decoration-thickness: 2px;
     text-underline-offset: 2px;
 }
+/* Remove underline from button-styled links */
+.post-body a[class*="bg-"],
+.post-body a[class*="rounded"] {
+    text-decoration: none;
+}
 
 /* White background tiles need a subtle border */
 .tile-white {
