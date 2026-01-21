@@ -24,29 +24,15 @@
         navigation: auto;
       }
 
-      /* Disable root page animation - only animate the tile itself */
+      /* Fast, subtle page crossfade */
       ::view-transition-old(root),
       ::view-transition-new(root) {
-        animation: none;
+        animation-duration: 0.15s;
       }
 
-      /* Smooth tile transitions with optimized easing */
-      ::view-transition-old(*),
-      ::view-transition-new(*) {
-        animation-duration: 0.5s;
-        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-        mix-blend-mode: normal;
-      }
-
-      /* Ensure carousel container is ready for incoming transition */
-      .carousel-container {
-        transform: translateZ(0);
-        backface-visibility: hidden;
-      }
-
-      /* Disable hover during view transitions to prevent conflicts */
-      html:has(::view-transition) .company a:has(img):hover {
-        transform: none !important;
+      /* Smooth tile morph animation */
+      ::view-transition-group(*):not(::view-transition-group(root)) {
+        animation-duration: 0.4s;
       }
     </style>
     <style>

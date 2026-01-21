@@ -23,41 +23,15 @@
         navigation: auto;
       }
 
-      /* Disable root page animation - only animate the tile itself */
+      /* Fast, subtle page crossfade */
       ::view-transition-old(root),
       ::view-transition-new(root) {
-        animation: none;
+        animation-duration: 0.15s;
       }
 
-      /* Smooth tile transitions with optimized easing */
-      ::view-transition-old(*),
-      ::view-transition-new(*) {
-        animation-duration: 0.5s;
-        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-        mix-blend-mode: normal;
-      }
-
-      /* Prevent grid layout shift by maintaining space */
-      .companies {
-        contain: layout;
-      }
-
-      /* Optimize individual tiles for transitions */
-      .company {
-        contain: layout style paint;
-        will-change: auto;
-      }
-
-      /* Smooth tile image transitions with GPU acceleration */
-      .company img {
-        transform: translateZ(0);
-        backface-visibility: hidden;
-        will-change: transform;
-      }
-
-      /* Disable hover during view transitions to prevent conflicts */
-      html:has(::view-transition) .company a:has(img):hover {
-        transform: none !important;
+      /* Smooth tile morph animation */
+      ::view-transition-group(*):not(::view-transition-group(root)) {
+        animation-duration: 0.4s;
       }
     </style>
   </head>
@@ -122,6 +96,7 @@
                     Apply
                 </a>
             </div>
+        </div>
         </div>
         </div>
         </div>
