@@ -22,8 +22,15 @@
       @view-transition {
         navigation: auto;
       }
+
+      /* Instant page swap - no animation */
       ::view-transition-old(root),
       ::view-transition-new(root) {
+        animation: none;
+      }
+
+      /* ONLY the tile morphs */
+      ::view-transition-group(*):not(::view-transition-group(root)) {
         animation-duration: 0.3s;
       }
     </style>
@@ -89,6 +96,12 @@
                     Apply
                 </a>
             </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
+        </div>
         </div>
         </div>
         </div>

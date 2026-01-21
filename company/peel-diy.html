@@ -23,8 +23,15 @@
       @view-transition {
         navigation: auto;
       }
+
+      /* Instant page swap - no animation */
       ::view-transition-old(root),
       ::view-transition-new(root) {
+        animation: none;
+      }
+
+      /* ONLY the tile morphs */
+      ::view-transition-group(*):not(::view-transition-group(root)) {
         animation-duration: 0.3s;
       }
     </style>
@@ -40,12 +47,16 @@
         position: relative;
         overflow: hidden;
         border-radius: 1rem;
+        transform: translateZ(0);
+        backface-visibility: hidden;
       }
       .carousel {
         display: flex;
         touch-action: pan-y pinch-zoom;
         will-change: transform;
         cursor: grab;
+        transform: translateZ(0);
+        backface-visibility: hidden;
       }
       .carousel.dragging {
         cursor: grabbing;
@@ -64,6 +75,8 @@
         border-radius: 1rem;
         pointer-events: none;
         user-select: none;
+        transform: translateZ(0);
+        backface-visibility: hidden;
       }
       .carousel-slide img.white-bg,
       .carousel-slide video.white-bg {
