@@ -24,29 +24,15 @@
         navigation: auto;
       }
 
-      /* Sequence: fade out → tile morph → fade in */
-
-      /* Old page fades out quickly */
-      ::view-transition-old(root) {
-        animation: fade-out 0.15s ease-out;
-      }
-
-      /* New page fades in after old page is gone */
+      /* Instant page swap - no animation */
+      ::view-transition-old(root),
       ::view-transition-new(root) {
-        animation: fade-in 0.15s ease-in 0.15s;
+        animation: none;
       }
 
-      /* Tile morphs smoothly throughout the whole transition */
+      /* ONLY the tile morphs */
       ::view-transition-group(*):not(::view-transition-group(root)) {
-        animation-duration: 0.4s;
-      }
-
-      @keyframes fade-out {
-        to { opacity: 0; }
-      }
-
-      @keyframes fade-in {
-        from { opacity: 0; }
+        animation-duration: 0.3s;
       }
     </style>
     <style>
