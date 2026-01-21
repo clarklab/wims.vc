@@ -23,9 +23,32 @@
       @view-transition {
         navigation: auto;
       }
+
+      /* Faster, smoother root transitions */
       ::view-transition-old(root),
       ::view-transition-new(root) {
-        animation-duration: 0.3s;
+        animation-duration: 0.4s;
+        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      /* Optimize tile transitions with smoother easing */
+      ::view-transition-old(*),
+      ::view-transition-new(*) {
+        animation-duration: 0.4s;
+        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        mix-blend-mode: normal;
+        backface-visibility: hidden;
+      }
+
+      /* Ensure carousel container is ready for incoming transition */
+      .carousel-container {
+        transform: translateZ(0);
+        backface-visibility: hidden;
+      }
+
+      /* Disable hover during view transitions to prevent conflicts */
+      html:has(::view-transition) .company a:has(img):hover {
+        transform: none !important;
       }
     </style>
     <style>
@@ -40,12 +63,16 @@
         position: relative;
         overflow: hidden;
         border-radius: 1rem;
+        transform: translateZ(0);
+        backface-visibility: hidden;
       }
       .carousel {
         display: flex;
         touch-action: pan-y pinch-zoom;
         will-change: transform;
         cursor: grab;
+        transform: translateZ(0);
+        backface-visibility: hidden;
       }
       .carousel.dragging {
         cursor: grabbing;
@@ -64,6 +91,8 @@
         border-radius: 1rem;
         pointer-events: none;
         user-select: none;
+        transform: translateZ(0);
+        backface-visibility: hidden;
       }
       .carousel-slide img.white-bg,
       .carousel-slide video.white-bg {

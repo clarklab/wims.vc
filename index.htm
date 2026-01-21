@@ -22,9 +22,44 @@
       @view-transition {
         navigation: auto;
       }
+
+      /* Faster, smoother root transitions */
       ::view-transition-old(root),
       ::view-transition-new(root) {
-        animation-duration: 0.3s;
+        animation-duration: 0.4s;
+        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      /* Optimize tile transitions with smoother easing */
+      ::view-transition-old(*),
+      ::view-transition-new(*) {
+        animation-duration: 0.4s;
+        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        mix-blend-mode: normal;
+        backface-visibility: hidden;
+      }
+
+      /* Prevent grid layout shift by maintaining space */
+      .companies {
+        contain: layout;
+      }
+
+      /* Optimize individual tiles for transitions */
+      .company {
+        contain: layout style paint;
+        will-change: auto;
+      }
+
+      /* Smooth tile image transitions with GPU acceleration */
+      .company img {
+        transform: translateZ(0);
+        backface-visibility: hidden;
+        will-change: transform;
+      }
+
+      /* Disable hover during view transitions to prevent conflicts */
+      html:has(::view-transition) .company a:has(img):hover {
+        transform: none !important;
       }
     </style>
   </head>
@@ -89,6 +124,7 @@
                     Apply
                 </a>
             </div>
+        </div>
         </div>
         </div>
         </div>
