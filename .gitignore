@@ -84,3 +84,6 @@ typings/
 # Logs
 logs
 *.log
+
+# Local Netlify folder
+.netlify

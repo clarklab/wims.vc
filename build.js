@@ -323,7 +323,7 @@ function buildCompany(mdFile) {
 
     // Add Apply tile
     companyTilesHtml += `\n          <div class="company">
-            <a href="/contact" class="aspect-video rounded-lg bg-red-500/20 hover:bg-red-500/30 transition-colors flex items-center justify-center text-red-600 font-bold text-xl" style="font-family: 'Google Sans Flex', sans-serif;">
+            <a href="/apply" class="aspect-video rounded-lg bg-red-500/20 hover:bg-red-500/30 transition-colors flex items-center justify-center text-red-600 font-bold text-xl" style="font-family: 'Google Sans Flex', sans-serif;">
               Apply
             </a>
           </div>`;
@@ -388,7 +388,7 @@ function updateIndexWithCompanies() {
 
     // Add Apply tile at the end
     const applyTile = `            <div class="company">
-                <a href="/contact" class="aspect-video rounded-lg bg-red-500/20 hover:bg-red-500/30 transition-colors flex items-center justify-center text-red-600 font-bold text-xl" style="font-family: 'Google Sans Flex', sans-serif;">
+                <a href="/apply" class="aspect-video rounded-lg bg-red-500/20 hover:bg-red-500/30 transition-colors flex items-center justify-center text-red-600 font-bold text-xl" style="font-family: 'Google Sans Flex', sans-serif;">
                     Apply
                 </a>
             </div>`;

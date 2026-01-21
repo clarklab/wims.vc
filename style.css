@@ -17,3 +17,70 @@ font-style: normal;
     text-decoration-thickness: 2px;
     text-underline-offset: 2px;
 }
+
+/* White background tiles need a subtle border */
+.tile-white {
+    display: block;
+    border-radius: 0.5rem;
+    border: 1px solid rgba(67, 20, 7, 0.15);
+}
+
+/* Tile hover effect */
+.company a:has(img) {
+    display: block;
+    transition: transform 0.2s ease;
+}
+.company a:has(img):hover {
+    transform: scale(1.05);
+}
+
+/* Locked numbers section */
+.numbers-locked {
+    position: relative;
+    margin: 1.5rem 0;
+    border: 2px solid rgba(67, 20, 7, 0.15);
+    border-radius: 0.75rem;
+    padding: 1rem;
+}
+.numbers-locked .numbers-content {
+    filter: url(#pixelate);
+    user-select: none;
+    pointer-events: none;
+}
+.numbers-locked .numbers-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background: rgba(255, 247, 237, 0.5);
+    border-radius: 0.75rem;
+}
+.numbers-locked .lock-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    color: #dc2626;
+}
+.numbers-locked .lock-message {
+    font-family: 'Google Sans Flex', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: rgba(67, 20, 7, 0.8);
+    text-align: center;
+}
+.numbers-locked .lock-button {
+    font-family: 'Google Sans Flex', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.5rem 1.25rem;
+    background: #dc2626;
+    color: white;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    transition: background 0.2s;
+}
+.numbers-locked .lock-button:hover {
+    background: #b91c1c;
+}

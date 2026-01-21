@@ -1,0 +1,182 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://use.typekit.net/tia6kbg.css">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="icon" href="https://wims.vc/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@100..900&display=swap" rel="stylesheet">
+    <title>Apply - wims.vc</title>
+    <meta name="description" content="Apply to join wims.vc. Show us your pitch.">
+    <meta property="og:title" content="Apply - wims.vc">
+    <meta property="og:description" content="Apply to join wims.vc. Show us your pitch.">
+    <meta property="og:image" content="https://wims.vc/unfurl.png">
+    <meta property="og:url" content="https://wims.vc/apply">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="wims.vc">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+      @view-transition {
+        navigation: auto;
+      }
+      ::view-transition-old(root),
+      ::view-transition-new(root) {
+        animation-duration: 0.3s;
+      }
+      .video-container {
+        position: relative;
+        border-radius: 0.75rem;
+        overflow: hidden;
+        aspect-ratio: 16/9;
+        background: #1a1a1a;
+      }
+      .video-container video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+      }
+      .video-container video.active {
+        opacity: 1;
+      }
+      .form-field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .form-field label {
+        font-family: 'Google Sans Flex', sans-serif;
+        font-size: 0.875rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: rgba(67, 20, 7, 0.6);
+      }
+      .form-field input,
+      .form-field textarea,
+      .form-field select {
+        font-family: inherit;
+        font-size: 1.125rem;
+        padding: 0.875rem 1rem;
+        border: 2px solid rgba(67, 20, 7, 0.15);
+        border-radius: 0.5rem;
+        background: white;
+        color: #431407;
+        transition: border-color 0.2s;
+      }
+      .form-field input:focus,
+      .form-field textarea:focus,
+      .form-field select:focus {
+        outline: none;
+        border-color: #ea580c;
+      }
+      .form-field input::placeholder,
+      .form-field textarea::placeholder {
+        color: rgba(67, 20, 7, 0.3);
+      }
+      .form-field textarea {
+        resize: vertical;
+        min-height: 120px;
+      }
+    </style>
+  </head>
+  <body class="bg-orange-50/60 max-w-2xl mx-auto text-xl flex flex-col gap-8 items-start p-8 pt-24 md:p-24 pb-24 text-orange-950">
+    <a href="/"><img src="/w.svg" alt="wims.vc" class="w-12 inline-block"></a>
+
+    <div class="flex flex-col gap-4">
+      <h1 class="text-4xl font-bold" style="font-family: 'Google Sans Flex', sans-serif;">Show us your pitch.</h1>
+      <p class="text-lg opacity-80">We're looking for people who can sell a vision. Record a short video pitch telling us who you are, what role you're interested in, and why you'd be great at it.</p>
+      <a href="/blog/do-you-have-a-job-for-me.html" class="text-red-600 font-sans text-base font-medium hover:underline">Explaining how things work around here</a>
+    </div>
+
+    <!-- Video Player -->
+    <div class="video-container w-full">
+      <video src="/videos/call-1.mp4" muted playsinline loop class="active"></video>
+      <video src="/videos/call-2.mp4" muted playsinline loop></video>
+      <video src="/videos/call-3.mp4" muted playsinline loop></video>
+      <video src="/videos/call-4.mp4" muted playsinline loop></video>
+    </div>
+
+    <script>
+      (function() {
+        const videos = document.querySelectorAll('.video-container video');
+        let currentIndex = 0;
+
+        // Start all videos playing continuously
+        videos.forEach(video => video.play());
+
+        function fadeNext() {
+          videos[currentIndex].classList.remove('active');
+          currentIndex = (currentIndex + 1) % videos.length;
+          videos[currentIndex].classList.add('active');
+        }
+
+        // Cycle every 3 seconds
+        setInterval(fadeNext, 3000);
+      })();
+    </script>
+
+    <!-- Application Form -->
+    <form class="w-full flex flex-col gap-6" name="application" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="application">
+      <p class="hidden"><label>Don't fill this out: <input name="bot-field"></label></p>
+
+      <div class="form-field">
+        <label for="name">Your Name</label>
+        <input type="text" id="name" name="name" placeholder="First and last name" required>
+      </div>
+
+      <div class="form-field">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required>
+      </div>
+
+      <div class="form-field">
+        <label for="role">Role You're Applying For</label>
+        <select id="role" name="role" required>
+          <option value="">Select a role...</option>
+          <option value="Marketing Co-Founder">Marketing Co-Founder</option>
+          <option value="Sales Lead">Sales Lead</option>
+          <option value="Intern">Intern</option>
+          <option value="Investor">Investor</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="form-field">
+        <label for="video-url">Your Pitch Video URL</label>
+        <input type="url" id="video-url" name="video_url" placeholder="YouTube, Loom, Vimeo, Google Drive link..." required>
+        <span class="text-sm opacity-50">Upload your video to any service and paste the link here</span>
+      </div>
+
+      <div class="form-field">
+        <label for="message">Anything Else?</label>
+        <textarea id="message" name="message" placeholder="Links to your work, social profiles, or anything else you want us to know..."></textarea>
+      </div>
+
+      <button type="submit" class="w-full text-center bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-6 rounded-lg transition-colors text-lg" style="font-family: 'Google Sans Flex', sans-serif;">
+        Submit Application
+      </button>
+
+      <p class="text-sm opacity-50 text-center">We'll review your pitch and get back to you within a few days.</p>
+    </form>
+
+    <div class="w-full pt-12 flex flex-col gap-2">
+      <h1 class="font-bold text-2xl" style="font-family: 'Google Sans Flex', sans-serif;">wims.vc</h1>
+      <p class="font-sans text-base opacity-50 font-medium"><a href="https://x.com/clarklab">@clarklab</a> · <a href="https://x.com/angiedoes">@angiedoes</a></p>
+    </div>
+
+    <div class="footer w-full flex flex-col md:flex-row gap-4 font-sans text-base opacity-50 font-medium pt-4">
+      <a href="/contact">Contact</a>
+      <a href="/privacy.html">Privacy Policy</a>
+      <a href="/terms.html">Terms of Service</a>
+    </div>
+  </body>
+</html>
