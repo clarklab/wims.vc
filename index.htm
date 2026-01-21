@@ -23,20 +23,18 @@
         navigation: auto;
       }
 
-      /* Faster, smoother root transitions */
+      /* Disable root page animation - only animate the tile itself */
       ::view-transition-old(root),
       ::view-transition-new(root) {
-        animation-duration: 0.4s;
-        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        animation: none;
       }
 
-      /* Optimize tile transitions with smoother easing */
+      /* Smooth tile transitions with optimized easing */
       ::view-transition-old(*),
       ::view-transition-new(*) {
-        animation-duration: 0.4s;
+        animation-duration: 0.5s;
         animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
         mix-blend-mode: normal;
-        backface-visibility: hidden;
       }
 
       /* Prevent grid layout shift by maintaining space */
@@ -124,6 +122,7 @@
                     Apply
                 </a>
             </div>
+        </div>
         </div>
         </div>
         </div>
