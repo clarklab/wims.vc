@@ -110,8 +110,9 @@ function updateIndex() {
     const colors = ['red-500', 'blue-500', 'amber-500', 'green-500'];
     const blogListHTML = posts.map((post, index) => {
       const color = colors[index % colors.length];
+      const slug = post.filename.replace('.md', '');
       return `            <li>
-                <a href="/blog/${post.htmlFile}" class="underline decoration-4 decoration-${color}">${post.title}</a>
+                <a href="/blog/${slug}" class="underline decoration-4 decoration-${color}">${post.title}</a>
             </li>`;
     }).join('\n');
     
@@ -184,9 +185,14 @@ function getAllCompanies() {
 // Function to build a single company page
 function buildCompany(mdFile) {
   const mdPath = path.join(COMPANY_DATA_DIR, mdFile);
-  const htmlFile = mdFile.replace('.md', '.html');
-  const htmlPath = path.join(COMPANY_OUTPUT_DIR, htmlFile);
   const slug = mdFile.replace('.md', '');
+  const companyDir = path.join(COMPANY_OUTPUT_DIR, slug);
+  const htmlPath = path.join(companyDir, 'index.html');
+
+  // Ensure company subdirectory exists
+  if (!fs.existsSync(companyDir)) {
+    fs.mkdirSync(companyDir, { recursive: true });
+  }
 
   try {
     console.log(`Building company: ${mdFile}...`);
@@ -345,7 +351,7 @@ function buildCompany(mdFile) {
       const isWhite = company.thumbnail.includes('-white');
       const borderStyle = isWhite ? ' border-2 border-orange-950/15' : '';
       return `          <div class="company">
-            <a href="/company/${company.htmlFile}">
+            <a href="/company/${company.slug}">
               <img class="aspect-video object-cover rounded-lg${borderStyle}" src="${company.thumbnail}" alt="${company.name}" style="view-transition-name: tile-${company.slug}">
             </a>
           </div>`;
@@ -362,7 +368,7 @@ function buildCompany(mdFile) {
 
     // Write HTML file
     fs.writeFileSync(htmlPath, finalHtml);
-    console.log(`✅ Built company page: ${htmlFile}`);
+    console.log(`✅ Built company/${slug}/index.html`);
 
   } catch (error) {
     console.error(`❌ Error building company ${mdFile}:`, error.message);
@@ -412,7 +418,7 @@ function updateIndexWithCompanies() {
       const isWhite = company.thumbnail.includes('-white');
       const borderStyle = isWhite ? ' border-2 border-orange-950/15' : '';
       return `            <div class="company">
-                <a href="/company/${company.slug}.html">
+                <a href="/company/${company.slug}">
                     <img class="aspect-video object-cover rounded-lg${borderStyle}" src="${company.thumbnail}" alt="${company.name}" style="view-transition-name: tile-${company.slug}">
                 </a>
             </div>`;
@@ -444,8 +450,14 @@ function updateIndexWithCompanies() {
 // Function to build a single blog post
 function buildPost(mdFile) {
   const mdPath = path.join(BLOG_POSTS_DIR, mdFile);
-  const htmlFile = mdFile.replace('.md', '.html');
-  const htmlPath = path.join(BLOG_OUTPUT_DIR, htmlFile);
+  const slug = mdFile.replace('.md', '');
+  const blogDir = path.join(BLOG_OUTPUT_DIR, slug);
+  const htmlPath = path.join(blogDir, 'index.html');
+
+  // Ensure blog subdirectory exists
+  if (!fs.existsSync(blogDir)) {
+    fs.mkdirSync(blogDir, { recursive: true });
+  }
   
   try {
     console.log(`Building ${mdFile}...`);
@@ -483,8 +495,9 @@ function buildPost(mdFile) {
     const colors = ['red-500', 'blue-500', 'amber-500', 'green-500'];
     const blogListHTML = allPosts.map((post, index) => {
       const color = colors[index % colors.length];
+      const postSlug = post.filename.replace('.md', '');
       return `            <li>
-                <a href="/blog/${post.htmlFile}" class="underline decoration-4 decoration-${color}">${post.title}</a>
+                <a href="/blog/${postSlug}" class="underline decoration-4 decoration-${color}">${post.title}</a>
                 <span class="text-sm opacity-70"> · ${post.posted}</span>
             </li>`;
     }).join('\n');
@@ -504,10 +517,13 @@ ${blogListHTML}
       /<meta property="og:title" content="[^"]*">/,
       `<meta property="og:title" content="${title} - wims.vc">`
     );
-    
+
+    // Replace blog-slug in og:url and canonical
+    finalHtml = finalHtml.replace(/blog\/blog-slug/g, `blog/${slug}`);
+
     // Write HTML file
     fs.writeFileSync(htmlPath, finalHtml);
-    console.log(`✅ Built ${htmlFile}`);
+    console.log(`✅ Built blog/${slug}/index.html`);
     
   } catch (error) {
     console.error(`❌ Error building ${mdFile}:`, error.message);
@@ -538,10 +554,72 @@ function buildAllPosts() {
   updateIndex();
 }
 
+// Function to generate sitemap.xml
+function generateSitemap() {
+  console.log('🗺️  Generating sitemap.xml...');
+
+  const baseUrl = 'https://wims.vc';
+  const today = new Date().toISOString().split('T')[0];
+
+  const urls = [];
+
+  // Add homepage
+  urls.push({
+    loc: baseUrl,
+    lastmod: today,
+    priority: '1.0'
+  });
+
+  // Add static pages
+  const staticPages = ['apply', 'contact', 'privacy', 'terms'];
+  staticPages.forEach(page => {
+    urls.push({
+      loc: `${baseUrl}/${page}`,
+      lastmod: today,
+      priority: '0.5'
+    });
+  });
+
+  // Add company pages
+  const companies = getAllCompanies();
+  companies.forEach(company => {
+    urls.push({
+      loc: `${baseUrl}/company/${company.slug}`,
+      lastmod: today,
+      priority: '0.8'
+    });
+  });
+
+  // Add blog posts
+  const posts = getAllBlogPosts();
+  posts.forEach(post => {
+    const slug = post.filename.replace('.md', '');
+    urls.push({
+      loc: `${baseUrl}/blog/${slug}`,
+      lastmod: today,
+      priority: '0.7'
+    });
+  });
+
+  // Generate XML
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls.map(url => `  <url>
+    <loc>${url.loc}</loc>
+    <lastmod>${url.lastmod}</lastmod>
+    <priority>${url.priority}</priority>
+  </url>`).join('\n')}
+</urlset>`;
+
+  fs.writeFileSync('./sitemap.xml', xml);
+  console.log(`✅ Generated sitemap.xml with ${urls.length} URLs`);
+}
+
 // Function to build everything
 function buildAll() {
   buildAllPosts();
   buildAllCompanies();
+  generateSitemap();
 }
 
 // Main execution
